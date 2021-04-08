@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "JNet.Runtime.Sample",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build JNet.Runtime.Sample",
+            "program": "${workspaceFolder}/src/JNet.Runtime.Sample/bin/Debug/net5.0/JNet.Runtime.Sample.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "env": {
+                // Adds ${env:JAVA_HOME}\\bin\\server to the PATH to find jvm library
+                "PATH": "${env:JAVA_HOME}\\bin\\server;${env:PATH}"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
