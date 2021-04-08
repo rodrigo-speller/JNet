@@ -7,7 +7,7 @@ namespace JNet.Runtime.Sample
 {
     using java.lang;
 
-    unsafe class Program
+    class Program
     {
         static void Main(string[] args)
         {
