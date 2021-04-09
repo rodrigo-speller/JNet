@@ -1,6 +1,7 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
+using java.io;
 using JNet.Runtime;
 using JNet.Runtime.Sample;
 
@@ -11,6 +12,7 @@ namespace java.lang
         private static readonly JNetRuntime runtime;
 
         private static readonly jclass clz_System;
+        private static readonly jfieldID fid_out;
         private static readonly jmethodID mid_getProperty;
 
         static System()
@@ -18,7 +20,21 @@ namespace java.lang
             runtime = JNetHost.GetRuntime();
 
             clz_System = runtime.FindClass("java/lang/System");
+            fid_out = runtime.GetStaticFieldID(clz_System, "out", "Ljava/io/PrintStream;");
             mid_getProperty = runtime.GetStaticMethodID(clz_System, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
+        }
+
+        public static PrintStream Out
+        {
+            get
+            {
+                var obj = runtime.GetStaticObjectField(clz_System, fid_out);
+
+                if (obj.HasValue)
+                    return new PrintStream(obj);
+
+                return null;
+            }
         }
 
         public static jstring GetProperty(jstring key)
