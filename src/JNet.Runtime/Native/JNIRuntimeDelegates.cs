@@ -5,6 +5,16 @@ namespace JNet.Runtime.InteropServices
 {
     internal unsafe static class JNIRuntimeDelegates
     {
+        /* JNI Invoke Interface */
+
+        public delegate jint DestroyJavaVMDelegate(JavaVM* vm);
+        public delegate jint AttachCurrentThreadDelegate(JavaVM* vm, void** penv, void* args);
+        public delegate jint DetachCurrentThreadDelegate(JavaVM* vm);
+        public delegate jint GetEnvDelegate(JavaVM* vm, void** penv, jint version);
+        public delegate jint AttachCurrentThreadAsDaemonDelegate(JavaVM* vm, void** penv, void* args);
+
+        /* JNI Native Interface */
+
         public delegate jint GetVersionDelegate(JNIEnv* env);
         
         public delegate jclass FindClassDelegate(JNIEnv* env, string name);

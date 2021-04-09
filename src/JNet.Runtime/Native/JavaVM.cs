@@ -5,8 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace JNet.Runtime.InteropServices
 {
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct JavaVM
     {
+        public JNIInvokeInterface* functions;
     }
 }

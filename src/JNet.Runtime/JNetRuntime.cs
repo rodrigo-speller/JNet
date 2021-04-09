@@ -11,13 +11,15 @@ namespace JNet.Runtime
 {
     public unsafe class JNetRuntime
     {
+        private readonly JavaVM* vm;
         private readonly JNIEnv* env;
         private readonly JNIRuntimeInterface runtime;
 
         private JNetRuntime(JavaVM* vm, JNIEnv* env)
         {
+            this.vm = vm;
             this.env = env;
-            this.runtime = new JNIRuntimeInterface(env);
+            this.runtime = new JNIRuntimeInterface(vm, env);
         }
 
         public static JNetRuntime Create(params string[] optionStrings)

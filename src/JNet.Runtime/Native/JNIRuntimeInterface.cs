@@ -10,43 +10,67 @@ namespace JNet.Runtime.InteropServices
 {
     internal unsafe class JNIRuntimeInterface
     {
+        private readonly JavaVM* vm;
         private readonly JNIEnv* env;
 
-        public JNIRuntimeInterface(JNIEnv* env)
+        public JNIRuntimeInterface(JavaVM* vm, JNIEnv* env)
         {
-            var functions = env->functions;
-
+            this.vm = vm;
             this.env = env;
 
-            CreateDelegate<GetVersionDelegate>(functions->GetVersion, x => GetVersion = x);
+            /* JNI Invoke Inteface */
 
-            CreateDelegate<FindClassDelegate>(functions->FindClass, x => FindClass = x);
+            var vmFunctions = vm->functions;
 
-            CreateDelegate<GetMethodIDDelegate>(functions->GetMethodID, x => GetMethodID = x);
+            CreateDelegate<DestroyJavaVMDelegate>(vmFunctions->DestroyJavaVM, x => DestroyJavaVM = x);
+            CreateDelegate<AttachCurrentThreadDelegate>(vmFunctions->AttachCurrentThread, x => AttachCurrentThread = x);
+            CreateDelegate<DetachCurrentThreadDelegate>(vmFunctions->DetachCurrentThread, x => DetachCurrentThread = x);
+            CreateDelegate<GetEnvDelegate>(vmFunctions->GetEnv, x => GetEnv = x);
+            CreateDelegate<AttachCurrentThreadAsDaemonDelegate>(vmFunctions->AttachCurrentThreadAsDaemon, x => AttachCurrentThreadAsDaemon = x);
 
-            CreateDelegate<CallVoidMethodDelegate>(functions->CallVoidMethod, x => CallVoidMethod = x);
-            CreateDelegate<CallVoidMethodADelegate>(functions->CallVoidMethodA, x => CallVoidMethodA = x);
+            /* JNI Native Inteface */
 
-            CreateDelegate<GetFieldIDDelegate>(functions->GetFieldID, x => GetFieldID = x);
+            var envFunctions = env->functions;
 
-            CreateDelegate<GetStaticMethodIDDelegate>(functions->GetStaticMethodID, x => GetStaticMethodID = x);
+            CreateDelegate<GetVersionDelegate>(envFunctions->GetVersion, x => GetVersion = x);
 
-            CreateDelegate<CallStaticObjectMethodDelegate>(functions->CallStaticObjectMethod, x => CallStaticObjectMethod = x);
-            CreateDelegate<CallStaticObjectMethodADelegate>(functions->CallStaticObjectMethodA, x => CallStaticObjectMethodA = x);
+            CreateDelegate<FindClassDelegate>(envFunctions->FindClass, x => FindClass = x);
 
-            CreateDelegate<GetStaticFieldIDDelegate>(functions->GetStaticFieldID, x => GetStaticFieldID = x);
-            CreateDelegate<GetStaticObjectFieldDelegate>(functions->GetStaticObjectField, x => GetStaticObjectField = x);
+            CreateDelegate<GetMethodIDDelegate>(envFunctions->GetMethodID, x => GetMethodID = x);
 
-            CreateDelegate<NewStringDelegate>(functions->NewString, x => NewString = x);
-            CreateDelegate<GetStringLengthDelegate>(functions->GetStringLength, x => GetStringLength = x);
-            CreateDelegate<GetStringCharsDelegate>(functions->GetStringChars, x => GetStringChars = x);
-            CreateDelegate<ReleaseStringCharsDelegate>(functions->ReleaseStringChars, x => ReleaseStringChars = x);
+            CreateDelegate<CallVoidMethodDelegate>(envFunctions->CallVoidMethod, x => CallVoidMethod = x);
+            CreateDelegate<CallVoidMethodADelegate>(envFunctions->CallVoidMethodA, x => CallVoidMethodA = x);
 
-            CreateDelegate<NewStringUTFDelegate>(functions->NewStringUTF, x => NewStringUTF = x);
-            CreateDelegate<GetStringUTFLengthDelegate>(functions->GetStringUTFLength, x => GetStringUTFLength = x);
-            CreateDelegate<GetStringUTFCharsDelegate>(functions->GetStringUTFChars, x => GetStringUTFChars = x);
-            CreateDelegate<ReleaseStringUTFCharsDelegate>(functions->ReleaseStringUTFChars, x => ReleaseStringUTFChars = x);
+            CreateDelegate<GetFieldIDDelegate>(envFunctions->GetFieldID, x => GetFieldID = x);
+
+            CreateDelegate<GetStaticMethodIDDelegate>(envFunctions->GetStaticMethodID, x => GetStaticMethodID = x);
+
+            CreateDelegate<CallStaticObjectMethodDelegate>(envFunctions->CallStaticObjectMethod, x => CallStaticObjectMethod = x);
+            CreateDelegate<CallStaticObjectMethodADelegate>(envFunctions->CallStaticObjectMethodA, x => CallStaticObjectMethodA = x);
+
+            CreateDelegate<GetStaticFieldIDDelegate>(envFunctions->GetStaticFieldID, x => GetStaticFieldID = x);
+            CreateDelegate<GetStaticObjectFieldDelegate>(envFunctions->GetStaticObjectField, x => GetStaticObjectField = x);
+
+            CreateDelegate<NewStringDelegate>(envFunctions->NewString, x => NewString = x);
+            CreateDelegate<GetStringLengthDelegate>(envFunctions->GetStringLength, x => GetStringLength = x);
+            CreateDelegate<GetStringCharsDelegate>(envFunctions->GetStringChars, x => GetStringChars = x);
+            CreateDelegate<ReleaseStringCharsDelegate>(envFunctions->ReleaseStringChars, x => ReleaseStringChars = x);
+
+            CreateDelegate<NewStringUTFDelegate>(envFunctions->NewStringUTF, x => NewStringUTF = x);
+            CreateDelegate<GetStringUTFLengthDelegate>(envFunctions->GetStringUTFLength, x => GetStringUTFLength = x);
+            CreateDelegate<GetStringUTFCharsDelegate>(envFunctions->GetStringUTFChars, x => GetStringUTFChars = x);
+            CreateDelegate<ReleaseStringUTFCharsDelegate>(envFunctions->ReleaseStringUTFChars, x => ReleaseStringUTFChars = x);
         }
+
+        /* JNI Invoke Inteface */
+
+        public Func<DestroyJavaVMDelegate> DestroyJavaVM;
+        public Func<AttachCurrentThreadDelegate> AttachCurrentThread;
+        public Func<DetachCurrentThreadDelegate> DetachCurrentThread;
+        public Func<GetEnvDelegate> GetEnv;
+        public Func<AttachCurrentThreadAsDaemonDelegate> AttachCurrentThreadAsDaemon;
+
+        /* JNI Native Interface */
 
         public Func<GetVersionDelegate> GetVersion;
 
