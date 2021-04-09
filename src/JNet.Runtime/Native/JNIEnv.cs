@@ -8,6 +8,6 @@ namespace JNet.Runtime.InteropServices
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct JNIEnv
     {
-        public JNINativeInterface *functions;
+        public JNINativeInterface* functions;
     }
 }

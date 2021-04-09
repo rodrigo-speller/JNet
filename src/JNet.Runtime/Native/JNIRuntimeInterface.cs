@@ -10,9 +10,9 @@ namespace JNet.Runtime.InteropServices
 {
     internal unsafe class JNIRuntimeInterface
     {
-        private readonly JNIEnv *env;
+        private readonly JNIEnv* env;
 
-        public JNIRuntimeInterface(JNIEnv *env)
+        public JNIRuntimeInterface(JNIEnv* env)
         {
             var functions = env->functions;
 

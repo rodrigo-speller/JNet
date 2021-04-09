@@ -26,7 +26,7 @@ namespace JNet.Runtime.InteropServices
         /// returns a JNI error code (a negative number) if the requested version is not supported.
         /// </returns>
         [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
-        public static extern jint JNI_GetDefaultJavaVMInitArgs(void *vm_args);
+        public static extern jint JNI_GetDefaultJavaVMInitArgs(void* vm_args);
 
         /// <summary>
         /// Loads and initializes a Java VM. The current thread becomes the main thread. Sets the env argument to the
@@ -50,7 +50,7 @@ namespace JNet.Runtime.InteropServices
         /// (a negative number) on failure.
         /// </returns>
         [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
-        public static extern jint JNI_CreateJavaVM(JavaVM **p_vm, void **p_env, void *vm_args);
+        public static extern jint JNI_CreateJavaVM(JavaVM** p_vm, void** p_env, void* vm_args);
 
         /// <summary>
         /// Returns all Java VMs that have been created. Pointers to VMs are written in the buffer <i>vmBuf</i> in the
@@ -64,6 +64,6 @@ namespace JNet.Runtime.InteropServices
         /// <param name="nVMs">A pointer to an integer. May be a <i>null</i> value.</param>
         /// <returns></returns>
         [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
-        public static extern jint JNI_GetCreatedJavaVMs(JavaVM **vmBuf, jsize bufLen, jsize *nVMs);
+        public static extern jint JNI_GetCreatedJavaVMs(JavaVM** vmBuf, jsize bufLen, jsize* nVMs);
     }
 }

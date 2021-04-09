@@ -15,6 +15,6 @@ namespace JNet.Runtime.InteropServices
         }
 
         public string optionString;
-        public void *extraInfo;
+        public void* extraInfo;
     }
 }

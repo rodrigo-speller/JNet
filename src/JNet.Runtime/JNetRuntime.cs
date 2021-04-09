@@ -11,10 +11,10 @@ namespace JNet.Runtime
 {
     public unsafe class JNetRuntime
     {
-        private readonly JNIEnv *env;
+        private readonly JNIEnv* env;
         private readonly JNIRuntimeInterface runtime;
 
-        private JNetRuntime(JavaVM *vm, JNIEnv *env)
+        private JNetRuntime(JavaVM* vm, JNIEnv* env)
         {
             this.env = env;
             this.runtime = new JNIRuntimeInterface(env);
@@ -38,8 +38,8 @@ namespace JNet.Runtime
             var p_vmArgs = Marshal.AllocCoTaskMem(Marshal.SizeOf<JavaVMInitArgs>());
             Marshal.StructureToPtr(vm_args, p_vmArgs, false);
 
-            JavaVM *vm;
-            JNIEnv *env;
+            JavaVM* vm;
+            JNIEnv* env;
 
             var ret = JVMLib.JNI_CreateJavaVM(&vm, (void**)&env, (void*)p_vmArgs);
 
@@ -65,22 +65,22 @@ namespace JNet.Runtime
         public jobject CallStaticObjectMethod(jclass clazz, jmethodID methodID, params jvalue[] args)
             => runtime.CallStaticObjectMethodA()(env, clazz, methodID, args);
 
-        public jstring NewString(jchar *unicode, jsize len)
+        public jstring NewString(jchar* unicode, jsize len)
             => runtime.NewString()(env, unicode, len);
         public jsize GetStringLength(jstring str)
             => runtime.GetStringLength()(env, str);
-        public jchar *GetStringChars(jstring str, jboolean *isCopy)
+        public jchar* GetStringChars(jstring str, jboolean* isCopy)
             => runtime.GetStringChars()(env, str, isCopy);
-        public void ReleaseStringChars(jstring str, jchar *chars)
+        public void ReleaseStringChars(jstring str, jchar* chars)
             => runtime.ReleaseStringChars()(env, str, chars);
 
-        public jstring NewStringUTF(byte *utf)
+        public jstring NewStringUTF(byte* utf)
             => runtime.NewStringUTF()(env, utf);
         public jsize GetStringUTFLength(jstring str)
             => runtime.GetStringUTFLength()(env, str);
-        public byte *GetStringUTFChars(jstring str, jboolean *isCopy)
+        public byte* GetStringUTFChars(jstring str, jboolean* isCopy)
             => runtime.GetStringUTFChars()(env, str, isCopy);
-        public void ReleaseStringUTFChars(jstring str, byte *utf)
+        public void ReleaseStringUTFChars(jstring str, byte* utf)
             => runtime.ReleaseStringUTFChars()(env, str, utf);
     }
 }

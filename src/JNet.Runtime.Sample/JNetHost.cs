@@ -30,11 +30,11 @@ namespace JNet.Runtime.Sample
             return runtime;
         }
 
-        public unsafe static void Release(void *ptr)
+        public unsafe static void Release(void* ptr)
             => Marshal.FreeCoTaskMem((IntPtr)ptr);
 
-        public unsafe static jchar *ToJCharsPtr(string str)
-            => (jchar *)Marshal.StringToCoTaskMemUni(str);
+        public unsafe static jchar* ToJCharsPtr(string str)
+            => (jchar* )Marshal.StringToCoTaskMemUni(str);
 
         public unsafe static jstring ToJString(string str)
         {
@@ -48,8 +48,8 @@ namespace JNet.Runtime.Sample
             return jstr;
         }
 
-        public unsafe static string ToString(jchar *chars)
-            => new string((char *)chars);
+        public unsafe static string ToString(jchar* chars)
+            => new string((char*)chars);
 
         public unsafe static string ToString(jstring jstr)
         {
