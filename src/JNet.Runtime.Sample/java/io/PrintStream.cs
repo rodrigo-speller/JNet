@@ -32,13 +32,13 @@ namespace java.io
             this.obj = obj;
         }
 
-        public void println(jstring x)
+        public void Println(jstring x)
             => runtime.CallVoidMethod(obj, mid_println_A, x);
 
-        public void println(string x)
+        public void Println(string x)
         {
             var _x = JNetHost.ToJString(x);
-            println(_x);
+            Println(_x);
         }
     }
 }
