@@ -1,4 +1,4 @@
-﻿// Copyright (c) Rodrigo Speller. All rights reserved.
+// Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
 using System;
@@ -11,7 +11,7 @@ namespace JNet.Runtime.Sample
     {
         static void Main(string[] args)
         {
-            var javaVersion = System.getProperty("java.version");
+            var javaVersion = System.GetProperty("java.version");
 
             Console.WriteLine($"Java version: {javaVersion}");
         }

@@ -21,14 +21,14 @@ namespace java.lang
             mid_getProperty = runtime.GetStaticMethodID(clz_System, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
         }
 
-        public static jstring getProperty(jstring key)
+        public static jstring GetProperty(jstring key)
             => (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key);
 
-        public unsafe static string getProperty(string key)
+        public unsafe static string GetProperty(string key)
         {
             var _key = JNetHost.ToJString(key);
 
-            var _value = getProperty(_key);
+            var _value = GetProperty(_key);
 
             if (!_value.HasValue)
                 return null;
