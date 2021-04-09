@@ -57,6 +57,17 @@ namespace JNet.Runtime
         public jclass FindClass(string name)
             => runtime.FindClass()(env, name);
 
+        public jmethodID GetMethodID(jclass clazz, string name, string sig)
+            => runtime.GetMethodID()(env, clazz, name, sig);
+
+        public void CallVoidMethod(jobject obj, jmethodID methodID)
+            => runtime.CallVoidMethod()(env, obj, methodID);
+        public void CallVoidMethod(jobject obj, jmethodID methodID, params jvalue[] args)
+            => runtime.CallVoidMethodA()(env, obj, methodID, args);
+
+        public jfieldID GetFieldID(jclass clazz, string name, string sig)
+            => runtime.GetFieldID()(env, clazz, name, sig);
+
         public jmethodID GetStaticMethodID(jclass clazz, string name, string sig)
             => runtime.GetStaticMethodID()(env, clazz, name, sig);
 
@@ -64,6 +75,11 @@ namespace JNet.Runtime
             => runtime.CallStaticObjectMethod()(env, clazz, methodID);
         public jobject CallStaticObjectMethod(jclass clazz, jmethodID methodID, params jvalue[] args)
             => runtime.CallStaticObjectMethodA()(env, clazz, methodID, args);
+
+        public jfieldID GetStaticFieldID(jclass clazz, string name, string sig)
+            => runtime.GetStaticFieldID()(env, clazz, name, sig);
+        public jobject GetStaticObjectField(jclass clazz, jfieldID fieldID)
+            => runtime.GetStaticObjectField()(env, clazz, fieldID);
 
         public jstring NewString(jchar* unicode, jsize len)
             => runtime.NewString()(env, unicode, len);

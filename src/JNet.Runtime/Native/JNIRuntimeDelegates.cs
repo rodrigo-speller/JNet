@@ -9,11 +9,21 @@ namespace JNet.Runtime.InteropServices
         
         public delegate jclass FindClassDelegate(JNIEnv* env, string name);
 
+        public delegate jmethodID GetMethodIDDelegate(JNIEnv* env, jclass clazz, string name, string sig);
+
+        public delegate void CallVoidMethodDelegate(JNIEnv* env, jobject obj, jmethodID methodID);
+        public delegate void CallVoidMethodADelegate(JNIEnv* env, jobject obj, jmethodID methodID, jvalue[] args);
+
+        public delegate jfieldID GetFieldIDDelegate(JNIEnv* env, jclass clazz, string name, string sig);
+
         public delegate jmethodID GetStaticMethodIDDelegate(JNIEnv* env, jclass clazz, string name, string sig);
 
         public delegate jobject CallStaticObjectMethodDelegate(JNIEnv* env, jclass clazz, jmethodID methodID);
         public delegate jobject CallStaticObjectMethodADelegate(JNIEnv* env, jclass clazz, jmethodID methodID, jvalue[] args);
-        
+
+        public delegate jfieldID GetStaticFieldIDDelegate(JNIEnv* env, jclass clazz, string name, string sig);
+        public delegate jobject GetStaticObjectFieldDelegate(JNIEnv* env, jclass clazz, jfieldID fieldID);
+
         public delegate jstring NewStringDelegate(JNIEnv* env, jchar* unicode, jsize len);
         public delegate jsize GetStringLengthDelegate(JNIEnv* env, jstring str);
         public delegate jchar* GetStringCharsDelegate(JNIEnv* env, jstring str, jboolean* isCopy);
