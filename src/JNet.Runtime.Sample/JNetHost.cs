@@ -3,17 +3,37 @@
 
 using System;
 using System.Runtime.InteropServices;
+using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
     internal class JNetHost
     {
-        public static JNetRuntime GetRuntime()
-        {
-            var vm = JNetVirtualMachine.CurrentInstance
-                ?? throw new InvalidOperationException("Virtual Machine is not defined.");
+        private static readonly ObjectPool<TaskExecutor> executorsPool = new ObjectPool<TaskExecutor>(() => new TaskExecutor());
 
-            return vm.AttachCurrentThreadAsDaemon();
+        public static void Run(Action<JNetRuntime> task)
+        {
+            var executor = executorsPool.Get();
+            try
+            {
+                executor.Run(task);
+            }
+            finally
+            {
+                executorsPool.Return(executor);
+            }
+        }
+
+        public static T Run<T>(Func<JNetRuntime, T> task)
+        {
+            T result = default;
+
+            Run(runtime =>
+            {
+                result = task(runtime);
+            });
+
+            return result;
         }
 
         public unsafe static void Release(void* ptr)
@@ -24,10 +44,8 @@ namespace JNet.Runtime.Sample
 
         public unsafe static jstring ToJString(string str)
         {
-            var runtime = GetRuntime();
-
             var jchars = ToJCharsPtr(str);
-            var jstr = runtime.NewString(jchars, str.Length);
+            var jstr = Run(runtime => runtime.NewString(jchars, str.Length));
 
             Release(jchars);
 
@@ -39,14 +57,13 @@ namespace JNet.Runtime.Sample
 
         public unsafe static string ToString(jstring jstr)
         {
-            var runtime = GetRuntime();
-
-            var jchars = runtime.GetStringChars(jstr, null);
-            var str = ToString(jchars);
-
-            runtime.ReleaseStringChars(jstr, jchars);
-
-            return str;
+            return Run(runtime =>
+            {
+                var jchars = runtime.GetStringChars(jstr, null);
+                var str = ToString(jchars);
+                runtime.ReleaseStringChars(jstr, jchars);
+                return str;
+            });
         }
     }
 }

@@ -9,26 +9,30 @@ namespace java.lang
 {
     public class System
     {
-        private static readonly JNetRuntime runtime;
-
         private static readonly jclass clz_System;
         private static readonly jfieldID fid_out;
         private static readonly jmethodID mid_getProperty;
 
         static System()
-        {
-            runtime = JNetHost.GetRuntime();
+        {   
+            var setup = JNetHost.Run(runtime => {
+                var clz_System = runtime.FindClass("java/lang/System");
+                var fid_out = runtime.GetStaticFieldID(clz_System, "out", "Ljava/io/PrintStream;");
+                var mid_getProperty = runtime.GetStaticMethodID(clz_System, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
 
-            clz_System = runtime.FindClass("java/lang/System");
-            fid_out = runtime.GetStaticFieldID(clz_System, "out", "Ljava/io/PrintStream;");
-            mid_getProperty = runtime.GetStaticMethodID(clz_System, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
+                return (clz_System, fid_out, mid_getProperty);
+            });
+
+            clz_System = setup.clz_System;
+            fid_out = setup.fid_out;
+            mid_getProperty = setup.mid_getProperty;
         }
 
         public static PrintStream Out
         {
             get
             {
-                var obj = runtime.GetStaticObjectField(clz_System, fid_out);
+                var obj = JNetHost.Run(runtime => runtime.GetStaticObjectField(clz_System, fid_out));
 
                 if (obj.HasValue)
                     return new PrintStream(obj);
@@ -38,7 +42,7 @@ namespace java.lang
         }
 
         public static jstring GetProperty(jstring key)
-            => (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key);
+            => JNetHost.Run(runtime => (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key));
 
         public unsafe static string GetProperty(string key)
         {
