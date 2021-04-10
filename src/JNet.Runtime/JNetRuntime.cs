@@ -41,6 +41,11 @@ namespace JNet.Runtime
         public jobject CallStaticObjectMethod(jclass clazz, jmethodID methodID, params jvalue[] args)
             => runtime.CallStaticObjectMethodA()(env, clazz, methodID, args);
 
+        public void CallStaticVoidMethod(jclass clazz, jmethodID methodID)
+            => runtime.CallStaticVoidMethod()(env, clazz, methodID);
+        public void CallStaticVoidMethod(jclass clazz, jmethodID methodID, params jvalue[] args)
+            => runtime.CallStaticVoidMethodA()(env, clazz, methodID, args);
+
         public jfieldID GetStaticFieldID(jclass clazz, string name, string sig)
             => runtime.GetStaticFieldID()(env, clazz, name, sig);
         public jobject GetStaticObjectField(jclass clazz, jfieldID fieldID)

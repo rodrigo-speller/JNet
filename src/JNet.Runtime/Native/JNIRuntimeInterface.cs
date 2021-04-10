@@ -33,6 +33,9 @@ namespace JNet.Runtime.InteropServices
             CreateDelegate<CallStaticObjectMethodDelegate>(functions->CallStaticObjectMethod, x => CallStaticObjectMethod = x);
             CreateDelegate<CallStaticObjectMethodADelegate>(functions->CallStaticObjectMethodA, x => CallStaticObjectMethodA = x);
 
+            CreateDelegate<CallStaticVoidMethodDelegate>(functions->CallStaticVoidMethod, x => CallStaticVoidMethod = x);
+            CreateDelegate<CallStaticVoidMethodADelegate>(functions->CallStaticVoidMethodA, x => CallStaticVoidMethodA = x);
+
             CreateDelegate<GetStaticFieldIDDelegate>(functions->GetStaticFieldID, x => GetStaticFieldID = x);
             CreateDelegate<GetStaticObjectFieldDelegate>(functions->GetStaticObjectField, x => GetStaticObjectField = x);
 
@@ -64,6 +67,9 @@ namespace JNet.Runtime.InteropServices
 
         public Func<CallStaticObjectMethodDelegate> CallStaticObjectMethod;
         public Func<CallStaticObjectMethodADelegate> CallStaticObjectMethodA;
+
+        public Func<CallStaticVoidMethodDelegate> CallStaticVoidMethod;
+        public Func<CallStaticVoidMethodADelegate> CallStaticVoidMethodA;
 
         public Func<GetStaticFieldIDDelegate> GetStaticFieldID;
         public Func<GetStaticObjectFieldDelegate> GetStaticObjectField;

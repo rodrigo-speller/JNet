@@ -34,6 +34,9 @@ namespace JNet.Runtime.InteropServices
         public delegate jobject CallStaticObjectMethodDelegate(JNIEnv* env, jclass clazz, jmethodID methodID);
         public delegate jobject CallStaticObjectMethodADelegate(JNIEnv* env, jclass clazz, jmethodID methodID, jvalue[] args);
 
+        public delegate void CallStaticVoidMethodDelegate(JNIEnv* env, jclass clazz, jmethodID methodID);
+        public delegate void CallStaticVoidMethodADelegate(JNIEnv* env, jclass clazz, jmethodID methodID, jvalue[] args);
+
         public delegate jfieldID GetStaticFieldIDDelegate(JNIEnv* env, jclass clazz, string name, string sig);
         public delegate jobject GetStaticObjectFieldDelegate(JNIEnv* env, jclass clazz, jfieldID fieldID);
 
