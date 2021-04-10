@@ -7,9 +7,17 @@ using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
-    internal class JNetHost
+    internal static class JNetHost
     {
-        private static readonly ObjectPool<TaskExecutor> executorsPool = new ObjectPool<TaskExecutor>(() => new TaskExecutor());
+        private static JNetVirtualMachine vm;
+        private static readonly ObjectPool<TaskExecutor> executorsPool = new ObjectPool<TaskExecutor>(CreateTaskExecutor);
+
+        public static void Initialize(params string[] optionStrings)
+        {
+            var vm = JNetVirtualMachine.Initialize(optionStrings);
+
+            JNetHost.vm = vm;
+        }
 
         public static void Run(Action<JNetRuntime> task)
         {
@@ -34,6 +42,14 @@ namespace JNet.Runtime.Sample
             });
 
             return result;
+        }
+
+        private static TaskExecutor CreateTaskExecutor()
+        {
+            var vm = JNetHost.vm
+                ?? throw new InvalidOperationException($"{nameof(JNetHost)} is not initialized.");
+
+            return new TaskExecutor(vm);
         }
 
         public unsafe static void Release(void* ptr)

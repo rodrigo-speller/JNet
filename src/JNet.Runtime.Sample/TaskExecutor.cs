@@ -8,6 +8,7 @@ namespace JNet.Runtime.Sample
 {
     internal class TaskExecutor
     {
+        private readonly JNetVirtualMachine vm;
         private readonly Thread thread;
         private readonly ManualResetEventSlim daemonSync = new ManualResetEventSlim(false);
         private readonly ManualResetEventSlim taskSync = new ManualResetEventSlim(false);
@@ -15,18 +16,18 @@ namespace JNet.Runtime.Sample
         private Action<JNetRuntime> currentTask;
         private Exception lastException;
 
-        public TaskExecutor()
+        public TaskExecutor(JNetVirtualMachine vm)
         {
             var thread = new Thread(Daemon);
 
             thread.Start();
 
+            this.vm = vm;
             this.thread = thread;
         }
 
         private void Daemon()
         {
-            var vm = JNetVirtualMachine.CurrentInstance;
             var rt = vm.AttachCurrentThreadAsDaemon();
 
             while (true)

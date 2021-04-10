@@ -22,11 +22,6 @@ namespace JNet.Runtime
             this.runtime = new JNIVirtualMachineInterface(vm);
         }
 
-        public static JNetVirtualMachine CurrentInstance { get; private set; }
-
-        public static JNetVirtualMachine Initialize(params string[] optionStrings)
-            => Initialize((IEnumerable<string>)optionStrings);
-
         public static JNetVirtualMachine Initialize(IEnumerable<string> optionStrings)
         {
             lock (instanceSync)
@@ -55,8 +50,6 @@ namespace JNet.Runtime
                 JNIResultException.Check(ret);
 
                 var instance = new JNetVirtualMachine(vm);
-
-                CurrentInstance = instance;
 
                 return instance;
             }
@@ -94,8 +87,6 @@ namespace JNet.Runtime
             {
                 var ret = runtime.DestroyJavaVM()(vm);
                 JNIResultException.Check(ret);
-
-                CurrentInstance = null;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace JNet.Runtime.Sample
     {
         static void Main(string[] args)
         {
-            JNetVirtualMachine.Initialize();
+            JNetHost.Initialize();
 
             var javaVersion = System.GetProperty("java.version");
 
