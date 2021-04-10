@@ -2,73 +2,50 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
 using System;
-using System.Runtime.InteropServices;
 
-using static JNet.Runtime.InteropServices.JNIRuntimeDelegates;
+using static JNet.Runtime.InteropServices.JNIDelegates;
 
 namespace JNet.Runtime.InteropServices
 {
     internal unsafe class JNIRuntimeInterface
     {
-        private readonly JavaVM* vm;
         private readonly JNIEnv* env;
 
-        public JNIRuntimeInterface(JavaVM* vm, JNIEnv* env)
+        public JNIRuntimeInterface(JNIEnv* env)
         {
-            this.vm = vm;
             this.env = env;
 
-            /* JNI Invoke Inteface */
+            var functions = env->functions;
 
-            var vmFunctions = vm->functions;
+            CreateDelegate<GetVersionDelegate>(functions->GetVersion, x => GetVersion = x);
 
-            CreateDelegate<DestroyJavaVMDelegate>(vmFunctions->DestroyJavaVM, x => DestroyJavaVM = x);
-            CreateDelegate<AttachCurrentThreadDelegate>(vmFunctions->AttachCurrentThread, x => AttachCurrentThread = x);
-            CreateDelegate<DetachCurrentThreadDelegate>(vmFunctions->DetachCurrentThread, x => DetachCurrentThread = x);
-            CreateDelegate<GetEnvDelegate>(vmFunctions->GetEnv, x => GetEnv = x);
-            CreateDelegate<AttachCurrentThreadAsDaemonDelegate>(vmFunctions->AttachCurrentThreadAsDaemon, x => AttachCurrentThreadAsDaemon = x);
+            CreateDelegate<FindClassDelegate>(functions->FindClass, x => FindClass = x);
 
-            /* JNI Native Inteface */
+            CreateDelegate<GetMethodIDDelegate>(functions->GetMethodID, x => GetMethodID = x);
 
-            var envFunctions = env->functions;
+            CreateDelegate<CallVoidMethodDelegate>(functions->CallVoidMethod, x => CallVoidMethod = x);
+            CreateDelegate<CallVoidMethodADelegate>(functions->CallVoidMethodA, x => CallVoidMethodA = x);
 
-            CreateDelegate<GetVersionDelegate>(envFunctions->GetVersion, x => GetVersion = x);
+            CreateDelegate<GetFieldIDDelegate>(functions->GetFieldID, x => GetFieldID = x);
 
-            CreateDelegate<FindClassDelegate>(envFunctions->FindClass, x => FindClass = x);
+            CreateDelegate<GetStaticMethodIDDelegate>(functions->GetStaticMethodID, x => GetStaticMethodID = x);
 
-            CreateDelegate<GetMethodIDDelegate>(envFunctions->GetMethodID, x => GetMethodID = x);
+            CreateDelegate<CallStaticObjectMethodDelegate>(functions->CallStaticObjectMethod, x => CallStaticObjectMethod = x);
+            CreateDelegate<CallStaticObjectMethodADelegate>(functions->CallStaticObjectMethodA, x => CallStaticObjectMethodA = x);
 
-            CreateDelegate<CallVoidMethodDelegate>(envFunctions->CallVoidMethod, x => CallVoidMethod = x);
-            CreateDelegate<CallVoidMethodADelegate>(envFunctions->CallVoidMethodA, x => CallVoidMethodA = x);
+            CreateDelegate<GetStaticFieldIDDelegate>(functions->GetStaticFieldID, x => GetStaticFieldID = x);
+            CreateDelegate<GetStaticObjectFieldDelegate>(functions->GetStaticObjectField, x => GetStaticObjectField = x);
 
-            CreateDelegate<GetFieldIDDelegate>(envFunctions->GetFieldID, x => GetFieldID = x);
+            CreateDelegate<NewStringDelegate>(functions->NewString, x => NewString = x);
+            CreateDelegate<GetStringLengthDelegate>(functions->GetStringLength, x => GetStringLength = x);
+            CreateDelegate<GetStringCharsDelegate>(functions->GetStringChars, x => GetStringChars = x);
+            CreateDelegate<ReleaseStringCharsDelegate>(functions->ReleaseStringChars, x => ReleaseStringChars = x);
 
-            CreateDelegate<GetStaticMethodIDDelegate>(envFunctions->GetStaticMethodID, x => GetStaticMethodID = x);
-
-            CreateDelegate<CallStaticObjectMethodDelegate>(envFunctions->CallStaticObjectMethod, x => CallStaticObjectMethod = x);
-            CreateDelegate<CallStaticObjectMethodADelegate>(envFunctions->CallStaticObjectMethodA, x => CallStaticObjectMethodA = x);
-
-            CreateDelegate<GetStaticFieldIDDelegate>(envFunctions->GetStaticFieldID, x => GetStaticFieldID = x);
-            CreateDelegate<GetStaticObjectFieldDelegate>(envFunctions->GetStaticObjectField, x => GetStaticObjectField = x);
-
-            CreateDelegate<NewStringDelegate>(envFunctions->NewString, x => NewString = x);
-            CreateDelegate<GetStringLengthDelegate>(envFunctions->GetStringLength, x => GetStringLength = x);
-            CreateDelegate<GetStringCharsDelegate>(envFunctions->GetStringChars, x => GetStringChars = x);
-            CreateDelegate<ReleaseStringCharsDelegate>(envFunctions->ReleaseStringChars, x => ReleaseStringChars = x);
-
-            CreateDelegate<NewStringUTFDelegate>(envFunctions->NewStringUTF, x => NewStringUTF = x);
-            CreateDelegate<GetStringUTFLengthDelegate>(envFunctions->GetStringUTFLength, x => GetStringUTFLength = x);
-            CreateDelegate<GetStringUTFCharsDelegate>(envFunctions->GetStringUTFChars, x => GetStringUTFChars = x);
-            CreateDelegate<ReleaseStringUTFCharsDelegate>(envFunctions->ReleaseStringUTFChars, x => ReleaseStringUTFChars = x);
+            CreateDelegate<NewStringUTFDelegate>(functions->NewStringUTF, x => NewStringUTF = x);
+            CreateDelegate<GetStringUTFLengthDelegate>(functions->GetStringUTFLength, x => GetStringUTFLength = x);
+            CreateDelegate<GetStringUTFCharsDelegate>(functions->GetStringUTFChars, x => GetStringUTFChars = x);
+            CreateDelegate<ReleaseStringUTFCharsDelegate>(functions->ReleaseStringUTFChars, x => ReleaseStringUTFChars = x);
         }
-
-        /* JNI Invoke Inteface */
-
-        public Func<DestroyJavaVMDelegate> DestroyJavaVM;
-        public Func<AttachCurrentThreadDelegate> AttachCurrentThread;
-        public Func<DetachCurrentThreadDelegate> DetachCurrentThread;
-        public Func<GetEnvDelegate> GetEnv;
-        public Func<AttachCurrentThreadAsDaemonDelegate> AttachCurrentThreadAsDaemon;
 
         /* JNI Native Interface */
 
@@ -101,16 +78,5 @@ namespace JNet.Runtime.InteropServices
         public Func<GetStringUTFCharsDelegate> GetStringUTFChars;
         public Func<ReleaseStringUTFCharsDelegate> ReleaseStringUTFChars;
 
-        private static void CreateDelegate<TDelegate>(IntPtr ptr, Action<Func<TDelegate>> setter)
-            where TDelegate : Delegate
-        {
-            setter(() => {
-                var _delegate = Marshal.GetDelegateForFunctionPointer<TDelegate>(ptr);
-
-                setter(() => _delegate);
-
-                return _delegate;
-            });
-        }
     }
 }

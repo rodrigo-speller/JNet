@@ -8,26 +8,12 @@ namespace JNet.Runtime.Sample
 {
     internal class JNetHost
     {
-        private static object staticSync = new object();
-        private static JNetRuntime runtime;
-
         public static JNetRuntime GetRuntime()
         {
-            var runtime = JNetHost.runtime;
+            var vm = JNetVirtualMachine.CurrentInstance
+                ?? throw new InvalidOperationException("Virtual Machine is not defined.");
 
-            if (runtime is null)
-            {
-                lock(staticSync)
-                {
-                    runtime = JNetHost.runtime;
-                    if (runtime is null)
-                    {
-                        runtime = JNetHost.runtime = JNetRuntime.Create();
-                    }
-                }
-            }
-
-            return runtime;
+            return vm.AttachCurrentThreadAsDaemon();
         }
 
         public unsafe static void Release(void* ptr)

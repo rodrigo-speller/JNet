@@ -1,56 +1,19 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using JNet.Runtime.InteropServices;
 
 namespace JNet.Runtime
 {
     public unsafe class JNetRuntime
     {
-        private readonly JavaVM* vm;
         private readonly JNIEnv* env;
         private readonly JNIRuntimeInterface runtime;
 
-        private JNetRuntime(JavaVM* vm, JNIEnv* env)
+        internal JNetRuntime(JNIEnv* env)
         {
-            this.vm = vm;
             this.env = env;
-            this.runtime = new JNIRuntimeInterface(vm, env);
-        }
-
-        public static JNetRuntime Create(params string[] optionStrings)
-            => Create((IEnumerable<string>)optionStrings);
-
-        public static JNetRuntime Create(IEnumerable<string> optionStrings)
-        {
-            if (optionStrings is null)
-                optionStrings = Array.Empty<string>();
-
-            var options = optionStrings.Select(opt => new JavaVMOption(opt));
-
-            JavaVMInitArgs vm_args = new JavaVMInitArgs();
-            vm_args.version = (int)JNIVersion.Version10;
-            vm_args.SetOptions(options.ToArray());
-            vm_args.ignoreUnrecognized = true; // invalid options make the JVM init fail
-
-            var p_vmArgs = Marshal.AllocCoTaskMem(Marshal.SizeOf<JavaVMInitArgs>());
-            Marshal.StructureToPtr(vm_args, p_vmArgs, false);
-
-            JavaVM* vm;
-            JNIEnv* env;
-
-            var ret = JVMLib.JNI_CreateJavaVM(&vm, (void**)&env, (void*)p_vmArgs);
-
-            vm_args.ReleaseOptions();
-            Marshal.FreeCoTaskMem(p_vmArgs);
-
-            JNIResultException.Check(ret);
-
-            return new JNetRuntime(vm, env);
+            this.runtime = new JNIRuntimeInterface(env);
         }
 
         public jint GetVersion()

@@ -1,9 +1,12 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace JNet.Runtime.InteropServices
 {
-    internal unsafe static class JNIRuntimeDelegates
+    internal unsafe static class JNIDelegates
     {
         /* JNI Invoke Interface */
 
@@ -43,5 +46,17 @@ namespace JNet.Runtime.InteropServices
         public delegate jsize GetStringUTFLengthDelegate(JNIEnv* env, jstring str);
         public delegate byte* GetStringUTFCharsDelegate(JNIEnv* env, jstring str, jboolean* isCopy);
         public delegate void ReleaseStringUTFCharsDelegate(JNIEnv* env, jstring str, byte* utf);
+
+        internal static void CreateDelegate<TDelegate>(IntPtr ptr, Action<Func<TDelegate>> setter)
+            where TDelegate : Delegate
+        {
+            setter(() => {
+                var _delegate = Marshal.GetDelegateForFunctionPointer<TDelegate>(ptr);
+
+                setter(() => _delegate);
+
+                return _delegate;
+            });
+        }
     }
 }
