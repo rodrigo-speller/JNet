@@ -50,6 +50,9 @@ namespace JNet.Runtime.InteropServices
         public delegate byte* GetStringUTFCharsDelegate(JNIEnv* env, jstring str, jboolean* isCopy);
         public delegate void ReleaseStringUTFCharsDelegate(JNIEnv* env, jstring str, byte* utf);
 
+        public delegate jint RegisterNativesDelegate(JNIEnv* env, jclass clazz, void* methods, jint nMethods);
+        public delegate jint UnregisterNativesDelegate(JNIEnv* env, jclass clazz);
+
         internal static void CreateDelegate<TDelegate>(IntPtr ptr, Action<Func<TDelegate>> setter)
             where TDelegate : Delegate
         {

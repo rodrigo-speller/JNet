@@ -48,6 +48,9 @@ namespace JNet.Runtime.InteropServices
             CreateDelegate<GetStringUTFLengthDelegate>(functions->GetStringUTFLength, x => GetStringUTFLength = x);
             CreateDelegate<GetStringUTFCharsDelegate>(functions->GetStringUTFChars, x => GetStringUTFChars = x);
             CreateDelegate<ReleaseStringUTFCharsDelegate>(functions->ReleaseStringUTFChars, x => ReleaseStringUTFChars = x);
+
+            CreateDelegate<RegisterNativesDelegate>(functions->RegisterNatives, x => RegisterNatives = x);
+            CreateDelegate<UnregisterNativesDelegate>(functions->UnregisterNatives, x => UnregisterNatives = x);
         }
 
         /* JNI Native Interface */
@@ -84,5 +87,7 @@ namespace JNet.Runtime.InteropServices
         public Func<GetStringUTFCharsDelegate> GetStringUTFChars;
         public Func<ReleaseStringUTFCharsDelegate> ReleaseStringUTFChars;
 
+        public Func<RegisterNativesDelegate> RegisterNatives;
+        public Func<UnregisterNativesDelegate> UnregisterNatives;
     }
 }

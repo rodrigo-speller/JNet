@@ -68,5 +68,10 @@ namespace JNet.Runtime
             => runtime.GetStringUTFChars()(env, str, isCopy);
         public void ReleaseStringUTFChars(jstring str, byte* utf)
             => runtime.ReleaseStringUTFChars()(env, str, utf);
+
+        public jint RegisterNatives(jclass clazz, void* methods, jint nMethods)
+            => runtime.RegisterNatives()(env, clazz, methods, nMethods);
+        public jint UnregisterNatives(jclass clazz)
+            => runtime.UnregisterNatives()(env, clazz);
     }
 }
