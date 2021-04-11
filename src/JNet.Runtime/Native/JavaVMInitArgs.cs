@@ -37,8 +37,19 @@ namespace JNet.Runtime.InteropServices
             if (ptr == IntPtr.Zero)
                 return;
 
+            var n = nOptions;
+
             options = IntPtr.Zero;
             nOptions = 0;
+
+            var sz = Marshal.SizeOf<JavaVMOption>();
+
+            var current = ptr;
+            while (n-- > 0)
+            {
+                Marshal.DestroyStructure<JavaVMOption>(current);
+                current += sz;
+            }
 
             Marshal.FreeCoTaskMem(ptr);
         }
