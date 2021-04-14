@@ -14,12 +14,10 @@ namespace JNet.Runtime
         private static readonly object instanceSync = new object();
 
         private readonly JavaVM* vm;
-        private readonly JNIVirtualMachineInterface runtime;
 
         private JNetVirtualMachine(JavaVM* vm)
         {
             this.vm = vm;
-            this.runtime = new JNIVirtualMachineInterface(vm);
         }
 
         public static JNetVirtualMachine Initialize(IEnumerable<string> optionStrings)
@@ -59,7 +57,7 @@ namespace JNet.Runtime
         {
             JNIEnv* env;
 
-            var ret = runtime.AttachCurrentThread()(vm, (void**)&env, null);
+            var ret = vm->functions->AttachCurrentThread(vm, (void**)&env, null);
             JNIResultException.Check(ret);
 
             return new JNetRuntime(env);
@@ -69,7 +67,7 @@ namespace JNet.Runtime
         {
             JNIEnv* env;
 
-            var ret = runtime.AttachCurrentThreadAsDaemon()(vm, (void**)&env, null);
+            var ret = vm->functions->AttachCurrentThreadAsDaemon(vm, (void**)&env, null);
             JNIResultException.Check(ret);
 
             return new JNetRuntime(env);
@@ -77,7 +75,7 @@ namespace JNet.Runtime
 
         public void DetachCurrentThread()
         {
-            var ret = runtime.DetachCurrentThread()(vm);
+            var ret = vm->functions->DetachCurrentThread(vm);
             JNIResultException.Check(ret);
         }
 
@@ -85,7 +83,7 @@ namespace JNet.Runtime
         {
             lock (instanceSync)
             {
-                var ret = runtime.DestroyJavaVM()(vm);
+                var ret = vm->functions->DestroyJavaVM(vm);
                 JNIResultException.Check(ret);
             }
         }

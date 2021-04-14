@@ -14,10 +14,11 @@ namespace JNet.Runtime.InteropServices
         private IntPtr reserved2;
         private IntPtr reserved3;
 
-        public IntPtr GetVersion;
+        public delegate* unmanaged<JNIEnv*, jint> GetVersion;
 
         public IntPtr DefineClass;
-        public IntPtr FindClass;
+
+        public delegate* unmanaged<JNIEnv*, string, jclass> FindClass;
 
         public IntPtr FromReflectedMethod;
         public IntPtr FromReflectedField;
@@ -54,7 +55,7 @@ namespace JNet.Runtime.InteropServices
         public IntPtr GetObjectClass;
         public IntPtr IsInstanceOf;
 
-        public IntPtr GetMethodID;
+        public delegate* unmanaged<JNIEnv*, jclass, string, string, jmethodID> GetMethodID;
 
         public IntPtr CallObjectMethod;
         public IntPtr CallObjectMethodV;
@@ -92,9 +93,9 @@ namespace JNet.Runtime.InteropServices
         public IntPtr CallDoubleMethodV;
         public IntPtr CallDoubleMethodA;
 
-        public IntPtr CallVoidMethod;
+        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, void> CallVoidMethod;
         public IntPtr CallVoidMethodV;
-        public IntPtr CallVoidMethodA;
+        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jvalue[], void> CallVoidMethodA;
 
         public IntPtr CallNonvirtualObjectMethod;
         public IntPtr CallNonvirtualObjectMethodV;
@@ -136,7 +137,7 @@ namespace JNet.Runtime.InteropServices
         public IntPtr CallNonvirtualVoidMethodV;
         public IntPtr CallNonvirtualVoidMethodA;
 
-        public IntPtr GetFieldID;
+        public delegate* unmanaged<JNIEnv*, jclass, string, string, jfieldID> GetFieldID;
 
         public IntPtr GetObjectField;
         public IntPtr GetBooleanField;
@@ -158,11 +159,11 @@ namespace JNet.Runtime.InteropServices
         public IntPtr SetFloatField;
         public IntPtr SetDoubleField;
 
-        public IntPtr GetStaticMethodID;
+        public delegate* unmanaged<JNIEnv*, jclass, string, string, jmethodID> GetStaticMethodID;
 
-        public IntPtr CallStaticObjectMethod;
+        public delegate* unmanaged<JNIEnv*, jclass, jmethodID, jobject> CallStaticObjectMethod;
         public IntPtr CallStaticObjectMethodV;
-        public IntPtr CallStaticObjectMethodA;
+        public delegate* unmanaged<JNIEnv*, jclass, jmethodID, jvalue[], jobject> CallStaticObjectMethodA;
 
         public IntPtr CallStaticBooleanMethod;
         public IntPtr CallStaticBooleanMethodV;
@@ -196,12 +197,12 @@ namespace JNet.Runtime.InteropServices
         public IntPtr CallStaticDoubleMethodV;
         public IntPtr CallStaticDoubleMethodA;
 
-        public IntPtr CallStaticVoidMethod;
+        public delegate* unmanaged<JNIEnv*, jclass, jmethodID, void> CallStaticVoidMethod;
         public IntPtr CallStaticVoidMethodV;
-        public IntPtr CallStaticVoidMethodA;
+        public delegate* unmanaged<JNIEnv*, jclass, jmethodID, jvalue[], void> CallStaticVoidMethodA;
 
-        public IntPtr GetStaticFieldID;
-        public IntPtr GetStaticObjectField;
+        public delegate* unmanaged<JNIEnv*, jclass, string, string, jfieldID> GetStaticFieldID;
+        public delegate* unmanaged<JNIEnv*, jclass, jfieldID, jobject> GetStaticObjectField;
         public IntPtr GetStaticBooleanField;
         public IntPtr GetStaticByteField;
         public IntPtr GetStaticCharField;
@@ -221,15 +222,15 @@ namespace JNet.Runtime.InteropServices
         public IntPtr SetStaticFloatField;
         public IntPtr SetStaticDoubleField;
 
-        public IntPtr NewString;
-        public IntPtr GetStringLength;
-        public IntPtr GetStringChars;
-        public IntPtr ReleaseStringChars;
+        public delegate* unmanaged<JNIEnv*, jchar*, jsize, jstring> NewString;
+        public delegate* unmanaged<JNIEnv*, jstring, jsize> GetStringLength;
+        public delegate* unmanaged<JNIEnv*, jstring, jboolean*, jchar*> GetStringChars;
+        public delegate* unmanaged<JNIEnv*, jstring, jchar*, void> ReleaseStringChars;
 
-        public IntPtr NewStringUTF;
-        public IntPtr GetStringUTFLength;
-        public IntPtr GetStringUTFChars;
-        public IntPtr ReleaseStringUTFChars;
+        public delegate* unmanaged<JNIEnv*, byte*, jstring> NewStringUTF;
+        public delegate* unmanaged<JNIEnv*, jstring, jsize> GetStringUTFLength;
+        public delegate* unmanaged<JNIEnv*, jstring, jboolean*, byte*> GetStringUTFChars;
+        public delegate* unmanaged<JNIEnv*, jstring, byte*, void> ReleaseStringUTFChars;
 
         public IntPtr GetArrayLength;
 
@@ -282,8 +283,8 @@ namespace JNet.Runtime.InteropServices
         public IntPtr SetFloatArrayRegion;
         public IntPtr SetDoubleArrayRegion;
 
-        public IntPtr RegisterNatives;
-        public IntPtr UnregisterNatives;
+        public delegate* unmanaged<JNIEnv*, jclass, void*, jint, jint> RegisterNatives;
+        public delegate* unmanaged<JNIEnv*, jclass, jint> UnregisterNatives;
 
         public IntPtr MonitorEnter;
         public IntPtr MonitorExit;

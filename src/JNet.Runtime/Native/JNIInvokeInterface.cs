@@ -13,10 +13,10 @@ namespace JNet.Runtime.InteropServices
         private IntPtr reserved1;
         private IntPtr reserved2;
 
-        public IntPtr DestroyJavaVM;
-        public IntPtr AttachCurrentThread;
-        public IntPtr DetachCurrentThread;
-        public IntPtr GetEnv;
-        public IntPtr AttachCurrentThreadAsDaemon;
+        public delegate* unmanaged<JavaVM*, jint> DestroyJavaVM;
+        public delegate* unmanaged<JavaVM*, void**, void*, jint> AttachCurrentThread;
+        public delegate* unmanaged<JavaVM*, jint> DetachCurrentThread;
+        public delegate* unmanaged<JavaVM*, void**, jint, jint> GetEnv;
+        public delegate* unmanaged<JavaVM*, void**, void*, jint> AttachCurrentThreadAsDaemon;
     }
 }
