@@ -12,6 +12,7 @@ namespace JNet.Runtime
     {
         public string JavaRuntimePath { get; set; }
         public IEnumerable<string> Classpath { get; set; }
+        public IJNetBootstrap Bootstrap { get; set; }
 
         internal IEnumerable<JavaVMOption> BuildOptions()
         {

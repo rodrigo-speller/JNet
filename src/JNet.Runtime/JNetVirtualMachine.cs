@@ -47,6 +47,13 @@ namespace JNet.Runtime
                 JNIResultException.Check(ret);
 
                 var instance = new JNetVirtualMachine(vm);
+                var runtime = new JNetRuntime(env);
+
+                var bootstrap = configuration.Bootstrap
+                    ?? DefaultBootstrap.GetBootstrap(runtime)
+                    ?? new NopBootstrap();
+
+                bootstrap.Startup(runtime);
 
                 return instance;
             }
