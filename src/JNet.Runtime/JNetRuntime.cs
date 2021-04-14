@@ -73,5 +73,13 @@ namespace JNet.Runtime
             => functions->RegisterNatives(env, clazz, methods, nMethods);
         public jint UnregisterNatives(jclass clazz)
             => functions->UnregisterNatives(env, clazz);
+
+        public jweak NewWeakGlobalRef(jobject obj)
+            => functions->NewWeakGlobalRef(env, obj);
+        public void DeleteWeakGlobalRef(jweak weak)
+            => functions->DeleteWeakGlobalRef(env, weak);
+
+        public jobjectRefType GetObjectRefType(jobject obj)
+            => functions->GetObjectRefType(env, obj);
     }
 }
