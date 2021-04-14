@@ -12,9 +12,9 @@ namespace JNet.Runtime.Sample
         private static JNetVirtualMachine vm;
         private static readonly ObjectPool<TaskExecutor> executorsPool = new ObjectPool<TaskExecutor>(CreateTaskExecutor);
 
-        public static void Initialize(params string[] optionStrings)
+        public static void Initialize(JNetConfiguration configuration = null)
         {
-            var vm = JNetVirtualMachine.Initialize(optionStrings);
+            var vm = JNetVirtualMachine.Initialize(configuration);
 
             JNetHost.vm = vm;
         }

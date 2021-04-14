@@ -1,8 +1,6 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using JNet.Runtime.InteropServices;
@@ -20,14 +18,15 @@ namespace JNet.Runtime
             this.vm = vm;
         }
 
-        public static JNetVirtualMachine Initialize(IEnumerable<string> optionStrings)
+        public static JNetVirtualMachine Initialize(JNetConfiguration configuration)
         {
+            configuration = configuration ?? new JNetConfiguration();
+
             lock (instanceSync)
             {
-                if (optionStrings is null)
-                    optionStrings = Array.Empty<string>();
+                var options = configuration.BuildOptions();
 
-                var options = optionStrings.Select(opt => new JavaVMOption(opt));
+                JVMLib.Load(configuration);
 
                 JavaVMInitArgs vm_args = new JavaVMInitArgs();
                 vm_args.version = (int)JNIVersion.Version10;

@@ -1,10 +1,7 @@
 {
   "profiles": {
     "JNet.Runtime.Sample": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "PATH": "%JAVA_HOME%/bin/server;%PATH%"
-      }
+      "commandName": "Project"
     }
   }
 }

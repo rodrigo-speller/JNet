@@ -1,6 +1,8 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
+using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace JNet.Runtime.InteropServices
@@ -11,6 +13,17 @@ namespace JNet.Runtime.InteropServices
         /// Dynamic JVM native library name.
         /// </summary>
         public const string JVMLibName = "jvm";
+
+        internal static void Load(JNetConfiguration configuration)
+        {
+            var path = configuration.JavaRuntimePath
+                ?? Environment.GetEnvironmentVariable("JAVA_HOME")
+                ;
+
+            path = Path.Combine(path, "bin", "server", "jvm.dll");
+
+            NativeLibrary.Load(path);
+        }
 
         /// <summary>
         /// Returns all Java VMs that have been created. Pointers to VMs are written in the buffer vmBuf in the order

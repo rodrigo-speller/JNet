@@ -10,11 +10,7 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "stopAtEntry": false,
-            "env": {
-                // Adds ${env:JAVA_HOME}\\bin\\server to the PATH to find jvm library
-                "PATH": "${env:JAVA_HOME}\\bin\\server;${env:PATH}"
-            }
+            "stopAtEntry": false
         },
         {
             "name": ".NET Core Attach",
