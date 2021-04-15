@@ -47,6 +47,16 @@ namespace JNet.Runtime
         public void FaltalError(string msg)
             => functions->FatalError(env, msg);
 
+        // GetObjectClass
+        public jclass GetObjectClass(jobject obj)
+            => functions->GetObjectClass(env, obj);
+
+        // CallObjectMethod
+        public jobject CallObjectMethod(jobject obj, jmethodID methodID)
+            => functions->CallObjectMethod(env, obj, methodID);
+        public jobject CallObjectMethod(jobject obj, jmethodID methodID, params jvalue[] args)
+            => functions->CallObjectMethodA(env, obj, methodID, args);
+
         // CallVoidMethod
         public void CallVoidMethod(jobject obj, jmethodID methodID)
             => functions->CallVoidMethod(env, obj, methodID);
