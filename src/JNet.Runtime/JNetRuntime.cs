@@ -28,6 +28,25 @@ namespace JNet.Runtime
         public jmethodID GetMethodID(jclass clazz, string name, string sig)
             => functions->GetMethodID(env, clazz, name, sig);
 
+        // Throw
+        public jint Throw(jthrowable obj)
+            => functions->Throw(env, obj);
+        // ThrowNew
+        public jint ThrowNew(jclass clazz, string msg)
+            => functions->ThrowNew(env, clazz, msg);
+        // ExceptionOccurred
+        public jthrowable ExceptionOccurred()
+            => functions->ExceptionOccurred(env);
+        // ExceptionDescribe
+        public void ExceptionDescribe()
+            => functions->ExceptionDescribe(env);
+        // ExceptionClear
+        public void ExceptionClear()
+            => functions->ExceptionClear(env);
+        // FatalError
+        public void FaltalError(string msg)
+            => functions->FatalError(env, msg);
+
         // CallVoidMethod
         public void CallVoidMethod(jobject obj, jmethodID methodID)
             => functions->CallVoidMethod(env, obj, methodID);
