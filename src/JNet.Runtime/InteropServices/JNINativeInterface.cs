@@ -86,9 +86,9 @@ namespace JNet.Runtime.InteropServices
         public delegate* unmanaged<JNIEnv*, jclass, string, string, jmethodID> GetMethodID;
 
         // CallObjectMethod
-        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jboolean> CallObjectMethod;
+        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jobject> CallObjectMethod;
         public IntPtr CallObjectMethodV;
-        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jvalue[], jboolean> CallObjectMethodA;
+        public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jvalue[], jobject> CallObjectMethodA;
 
         // CallBooleanMethod
         public delegate* unmanaged<JNIEnv*, jobject, jmethodID, jboolean> CallBooleanMethod;
