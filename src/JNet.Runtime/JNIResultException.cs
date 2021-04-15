@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace JNet.Runtime
 {
     [Serializable]
-    public class JNIResultException : Exception
+    public class JNIResultException : JNetRuntimeException
     {
         public JNIReturnCode ResultValue { get; }
 

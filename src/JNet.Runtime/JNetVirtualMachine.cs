@@ -46,17 +46,29 @@ namespace JNet.Runtime
 
                 JNIResultException.Check(ret);
 
-                var instance = new JNetVirtualMachine(vm);
-                var runtime = new JNetRuntime(env);
+                return Boot(configuration.Bootstrap, vm, env);
+            }
+        }
 
-                var bootstrap = configuration.Bootstrap
-                    ?? DefaultBootstrap.GetBootstrap(runtime)
+        private static JNetVirtualMachine Boot(IJNetBootstrap bootstrap, JavaVM* vm, JNIEnv* env)
+        {
+            var instance = new JNetVirtualMachine(vm);
+            var runtime = new JNetRuntime(env);
+
+            try
+            {
+                bootstrap ??= DefaultBootstrap.GetBootstrap(runtime)
                     ?? new NopBootstrap();
 
                 bootstrap.Startup(runtime);
-
-                return instance;
             }
+            catch
+            {
+                instance.Destroy();
+                throw;
+            }
+
+            return instance;
         }
 
         public JNetRuntime AttachCurrentThread()

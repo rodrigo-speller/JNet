@@ -23,14 +23,21 @@ namespace JNet.Runtime
             if (!mid_GetBootstrap.HasValue || !mid_GetVersion.HasValue || !mid_Startup.HasValue)
                 return null;
 
+            runtime.ExceptionClear();
             var bootstrap = runtime.CallStaticObjectMethod(clz_Bootstrap, mid_GetBootstrap);
+            runtime.CheckException();
 
             if (!bootstrap.HasValue)
                 return null;
 
             return new DefaultBootstrap()
             {
-                _startup = (runtime) => runtime.CallVoidMethod(bootstrap, mid_Startup)
+                _startup = (runtime) =>
+                {
+                    runtime.ExceptionClear();
+                    runtime.CallVoidMethod(bootstrap, mid_Startup);
+                    runtime.CheckException();
+                }
             };
         }
 
