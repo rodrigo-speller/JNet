@@ -29,8 +29,8 @@ namespace JNet.Runtime
                 JVMLib.Load(configuration);
 
                 JavaVMInitArgs vm_args = new JavaVMInitArgs();
-                vm_args.version = (int)JNIVersion.Version10;
                 vm_args.SetOptions(options.ToArray());
+                vm_args.version = (int)configuration.JNIVersion;
                 vm_args.ignoreUnrecognized = true; // invalid options make the JVM init fail
 
                 var p_vmArgs = Marshal.AllocCoTaskMem(Marshal.SizeOf<JavaVMInitArgs>());
