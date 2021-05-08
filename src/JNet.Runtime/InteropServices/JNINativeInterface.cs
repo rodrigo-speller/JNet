@@ -365,7 +365,7 @@ namespace JNet.Runtime.InteropServices
         public delegate* unmanaged<JNIEnv*, jsize, jdoubleArray> NewDoubleArray;
 
         // GetBooleanArrayElements
-        public delegate* unmanaged<JNIEnv*, jbooleanArray, jboolean*, jobject*> GetBooleanArrayElements;
+        public delegate* unmanaged<JNIEnv*, jbooleanArray, jboolean*, jboolean*> GetBooleanArrayElements;
         // GetByteArrayElements
         public delegate* unmanaged<JNIEnv*, jbyteArray, jboolean*, jbyte*> GetByteArrayElements;
         // GetCharArrayElements
@@ -382,21 +382,21 @@ namespace JNet.Runtime.InteropServices
         public delegate* unmanaged<JNIEnv*, jdoubleArray, jboolean*, jdouble*> GetDoubleArrayElements;
 
         // ReleaseBooleanArrayElements
-        public delegate* unmanaged<JNIEnv*, jbooleanArray, jboolean*, jint> ReleaseBooleanArrayElements;
+        public delegate* unmanaged<JNIEnv*, jbooleanArray, jboolean*, jint, void> ReleaseBooleanArrayElements;
         // ReleaseByteArrayElements
-        public delegate* unmanaged<JNIEnv*, jbyteArray, jbyte*, jint> ReleaseByteArrayElements;
+        public delegate* unmanaged<JNIEnv*, jbyteArray, jbyte*, jint, void> ReleaseByteArrayElements;
         // ReleaseCharArrayElements
-        public delegate* unmanaged<JNIEnv*, jcharArray, jchar*, jint> ReleaseCharArrayElements;
+        public delegate* unmanaged<JNIEnv*, jcharArray, jchar*, jint, void> ReleaseCharArrayElements;
         // ReleaseShortArrayElements
-        public delegate* unmanaged<JNIEnv*, jshortArray, jshort*, jint> ReleaseShortArrayElements;
+        public delegate* unmanaged<JNIEnv*, jshortArray, jshort*, jint, void> ReleaseShortArrayElements;
         // ReleaseIntArrayElements
-        public delegate* unmanaged<JNIEnv*, jintArray, jint*, jint> ReleaseIntArrayElements;
+        public delegate* unmanaged<JNIEnv*, jintArray, jint*, jint, void> ReleaseIntArrayElements;
         // ReleaseLongArrayElements
-        public delegate* unmanaged<JNIEnv*, jlongArray, jlong*, jint> ReleaseLongArrayElements;
+        public delegate* unmanaged<JNIEnv*, jlongArray, jlong*, jint, void> ReleaseLongArrayElements;
         // ReleaseFloatArrayElements
-        public delegate* unmanaged<JNIEnv*, jfloatArray, jfloat*, jint> ReleaseFloatArrayElements;
+        public delegate* unmanaged<JNIEnv*, jfloatArray, jfloat*, jint, void> ReleaseFloatArrayElements;
         // ReleaseDoubleArrayElements
-        public delegate* unmanaged<JNIEnv*, jdoubleArray, jdouble*, jint> ReleaseDoubleArrayElements;
+        public delegate* unmanaged<JNIEnv*, jdoubleArray, jdouble*, jint, void> ReleaseDoubleArrayElements;
 
         // GetBooleanArrayRegion
         public delegate* unmanaged<JNIEnv*, jbooleanArray, jsize, jsize, jboolean*, void> GetBooleanArrayRegion;
