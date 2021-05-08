@@ -38,13 +38,17 @@ namespace java.io
             this.obj = obj;
         }
 
-        public void Println(jstring x)
-            => JNetHost.Run(runtime => runtime.CallVoidMethod(obj, mid_println_A, x));
+        ~PrintStream()
+        {
+            JNetHost.Run(runtime => {
+                runtime.DeleteGlobalRef(this.obj);
+            });
+        }
 
         public void Println(string x)
-        {
-            var _x = JNetHost.ToJString(x);
-            Println(_x);
-        }
+            => JNetHost.Run(runtime => {
+                var jx = runtime.NewString(x);
+                runtime.CallVoidMethod(obj, mid_println_A, jx);
+            });
     }
 }

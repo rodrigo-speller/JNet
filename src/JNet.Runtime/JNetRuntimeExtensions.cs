@@ -3,6 +3,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace JNet.Runtime
 {
@@ -25,16 +26,35 @@ namespace JNet.Runtime
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe static string ToString(jchar* chars)
-            => new string((char*)chars);
+        public unsafe static jstring NewString(this JNetRuntime runtime, string str)
+        {
+            var jchars = AllocJChars(str);
+            var result = runtime.NewString(jchars, str.Length);
+
+            Release(jchars);
+
+            return result;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal unsafe static string ToString(this JNetRuntime runtime, jstring jstr)
+        public unsafe static string ToString(this JNetRuntime runtime, jstring jstr)
         {
             var jchars = runtime.GetStringChars(jstr, null);
             var str = ToString(jchars);
             runtime.ReleaseStringChars(jstr, jchars);
             return str;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe static jchar* AllocJChars(string str)
+            => (jchar*)Marshal.StringToCoTaskMemUni(str);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe static void Release(void* ptr)
+            => Marshal.FreeCoTaskMem((IntPtr)ptr);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe static string ToString(jchar* chars)
+            => new string((char*)chars);
     }
 }

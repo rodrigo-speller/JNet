@@ -20,6 +20,8 @@ namespace java.lang
                 var fid_out = runtime.GetStaticFieldID(clz_System, "out", "Ljava/io/PrintStream;");
                 var mid_getProperty = runtime.GetStaticMethodID(clz_System, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
 
+                clz_System = (jclass)runtime.NewGlobalRef(clz_System);
+
                 return (clz_System, fid_out, mid_getProperty);
             });
 
@@ -30,36 +32,30 @@ namespace java.lang
 
         public static PrintStream Out
         {
-            get
-            {
-                var obj = JNetHost.Run(runtime => runtime.GetStaticObjectField(clz_System, fid_out));
+            get => JNetHost.Run(runtime => {
+                var jobj = runtime.GetStaticObjectField(clz_System, fid_out);
 
-                if (obj.HasValue)
-                    return new PrintStream(obj);
+                if (!jobj.HasValue)
+                    return null;
 
-                return null;
-            }
+                jobj = runtime.NewGlobalRef(jobj);
+
+                return new PrintStream(jobj);
+            });
         }
 
-        public static jstring GetProperty(jstring key)
+        public unsafe static string GetProperty(string key)
             => JNetHost.Run(runtime => {
-                var value = (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key);
+                var jkey = runtime.NewString(key);
+
+                var value = (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, jkey);
 
                 runtime.ThrowExceptionOccurred();
 
-                return value;
+                if (!value.HasValue)
+                    return null;
+
+                return runtime.ToString(value);
             });
-
-        public unsafe static string GetProperty(string key)
-        {
-            var _key = JNetHost.ToJString(key);
-
-            var _value = GetProperty(_key);
-
-            if (!_value.HasValue)
-                return null;
-
-            return JNetHost.ToString(_value);
-        }
     }
 }
