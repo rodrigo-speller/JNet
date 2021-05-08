@@ -25,7 +25,7 @@ namespace JNet.Runtime
 
             runtime.ExceptionClear();
             var bootstrap = runtime.CallStaticObjectMethod(clz_Bootstrap, mid_GetBootstrap);
-            runtime.CheckException();
+            runtime.ThrowExceptionOccurred();
 
             if (!bootstrap.HasValue)
                 return null;
@@ -36,7 +36,7 @@ namespace JNet.Runtime
                 {
                     runtime.ExceptionClear();
                     runtime.CallVoidMethod(bootstrap, mid_Startup);
-                    runtime.CheckException();
+                    runtime.ThrowExceptionOccurred();
                 }
             };
         }

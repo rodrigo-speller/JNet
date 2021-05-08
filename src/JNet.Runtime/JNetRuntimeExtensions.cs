@@ -1,20 +1,26 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
+using System;
 using System.Runtime.CompilerServices;
 
 namespace JNet.Runtime
 {
-    internal static class JNetRuntimeExtensions
+    public static class JNetRuntimeExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CheckException(this JNetRuntime runtime)
+        public static void ThrowExceptionOccurred(this JNetRuntime runtime)
         {
-            var ex = runtime.ExceptionOccurred();
-            if (ex.HasValue)
+            if (runtime.ExceptionCheck())
             {
-                runtime.ExceptionClear();
-                throw new JNetThrowableException(runtime, ex);
+                var ex = runtime.ExceptionOccurred();
+                if (ex.HasValue)
+                {
+                    runtime.ExceptionClear();
+                    throw new JNetThrowableException(runtime, ex);
+                }
+
+                throw new InvalidOperationException();
             }
         }
 
@@ -23,7 +29,7 @@ namespace JNet.Runtime
             => new string((char*)chars);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe static string ToString(this JNetRuntime runtime, jstring jstr)
+        internal unsafe static string ToString(this JNetRuntime runtime, jstring jstr)
         {
             var jchars = runtime.GetStringChars(jstr, null);
             var str = ToString(jchars);
