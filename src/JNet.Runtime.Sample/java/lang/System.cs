@@ -42,7 +42,13 @@ namespace java.lang
         }
 
         public static jstring GetProperty(jstring key)
-            => JNetHost.Run(runtime => (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key));
+            => JNetHost.Run(runtime => {
+                var value = (jstring)runtime.CallStaticObjectMethod(clz_System, mid_getProperty, key);
+
+                runtime.ThrowExceptionOccurred();
+
+                return value;
+            });
 
         public unsafe static string GetProperty(string key)
         {
