@@ -21,6 +21,8 @@ namespace java.io
                 var clz_PrintStream = runtime.FindClass("java/io/PrintStream");
                 var mid_println_A = runtime.GetMethodID(clz_PrintStream, "println", "(Ljava/lang/String;)V");
 
+                clz_PrintStream = (jclass)runtime.NewGlobalRef(clz_PrintStream);
+
                 return (clz_PrintStream, mid_println_A);
             });
 
