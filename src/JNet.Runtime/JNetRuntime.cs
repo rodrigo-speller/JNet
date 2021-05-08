@@ -605,7 +605,7 @@ namespace JNet.Runtime
             => functions->GetStringUTFRegion(env, str, start, len, buf);
 
         // GetPrimitiveArrayCritical
-        public void GetPrimitiveArrayCritical(jarray array, jboolean* isCopy)
+        public void* GetPrimitiveArrayCritical(jarray array, jboolean* isCopy)
             => functions->GetPrimitiveArrayCritical(env, array, isCopy);
         // ReleasePrimitiveArrayCritical
         public void ReleasePrimitiveArrayCritical(jarray array, void* carray, jint mode)
