@@ -16,6 +16,7 @@ namespace JNet.Runtime
         public IEnumerable<string> Classpath { get; set; }
         public IJNetBootstrap Bootstrap { get; set; }
         public JNIVersion JNIVersion { get; set; } = JNIVersion.Version10;
+        public bool EnableDiagnostics { get; set; }
         public Logger LoggerCallback { get; set; }
 
         public delegate void Logger(string format, IntPtr args);
@@ -48,6 +49,9 @@ namespace JNet.Runtime
                     }).ToPointer()
                 });
             }
+
+            if (EnableDiagnostics)
+                options.Add(new JavaVMOption("-Xcheck:jni"));
 
             return options.AsEnumerable();
         }
