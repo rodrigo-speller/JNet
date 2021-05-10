@@ -33,5 +33,4 @@ jobs:
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
-        name: code-coverage-report
-        path: src/JNet.Runtime/bin/Debug/JNet.Runtime.0.0.0.nupkg
+        path: src/JNet.Runtime/bin/Debug/*.nupkg
