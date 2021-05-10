@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Packages
-        path: src/JNet.Runtime/bin/Debug/*.nupkg
+        path: src/JNet.Runtime/bin/Release/*.nupkg
