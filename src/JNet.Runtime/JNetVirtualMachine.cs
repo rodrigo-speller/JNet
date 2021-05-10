@@ -52,7 +52,7 @@ namespace JNet.Runtime
 
         private static JNetVirtualMachine Boot(IJNetBootstrap bootstrap, JavaVM* vm, JNIEnv* env)
         {
-            var vm = new JNetVirtualMachine(vm);
+            var instance = new JNetVirtualMachine(vm);
             var runtime = new JNetRuntime(env);
 
             try
@@ -64,11 +64,11 @@ namespace JNet.Runtime
             }
             catch
             {
-                vm.Destroy();
+                instance.Destroy();
                 throw;
             }
 
-            return vm;
+            return instance;
         }
 
         public JNetRuntime AttachCurrentThread()
