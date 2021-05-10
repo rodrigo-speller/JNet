@@ -28,9 +28,10 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Pack
-      run: dotnet pack "src/JNet.Runtime" --no-build
+      run: dotnet pack "src/JNet.Runtime" -c Release
 
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
+        name: Packages
         path: src/JNet.Runtime/bin/Debug/*.nupkg
