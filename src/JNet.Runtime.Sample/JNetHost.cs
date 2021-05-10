@@ -1,55 +1,45 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using System;
 using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
     internal static class JNetHost
     {
-        private static JNetVirtualMachine vm;
-        private static readonly ObjectPool<TaskExecutor> executorsPool = new ObjectPool<TaskExecutor>(CreateTaskExecutor);
+        private static ObjectPool<JNetRunner> runnersPool;
 
         public static void Initialize(JNetConfiguration configuration = null)
         {
             var vm = JNetVirtualMachine.Initialize(configuration);
 
-            JNetHost.vm = vm;
+            runnersPool = JNetRunner.CreatePool(vm);
         }
 
-        public static void Run(Action<JNetRuntime> task)
+        public static void Run(JNetRunnable runnable)
         {
-            var executor = executorsPool.Get();
+            var runner = runnersPool.Get();
             try
             {
-                executor.Run(task);
+                runner.Run(runnable);
             }
             finally
             {
-                if (executor.CanReuse)
-                    executorsPool.Return(executor);
+                if (runner.CanReuse)
+                    runnersPool.Return(runner);
             }
         }
 
-        public static T Run<T>(Func<JNetRuntime, T> task)
+        public static T Run<T>(JNetRunnable<T> runnable)
         {
             T result = default;
 
             Run(runtime =>
             {
-                result = task(runtime);
+                result = runnable(runtime);
             });
 
             return result;
-        }
-
-        private static TaskExecutor CreateTaskExecutor()
-        {
-            var vm = JNetHost.vm
-                ?? throw new InvalidOperationException($"{nameof(JNetHost)} is not initialized.");
-
-            return new TaskExecutor(vm);
         }
     }
 }

@@ -38,5 +38,12 @@ namespace JNet.Runtime.Sample.Utils
             signal.Wait();
             return value;
         }
+
+        public T WaitAndReset()
+        {
+            var value = Wait();
+            Reset();
+            return value;
+        }
     }
 }

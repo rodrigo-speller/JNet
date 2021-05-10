@@ -7,19 +7,19 @@ using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
-    internal class TaskExecutor
+    internal class JNetRunner
     {
         private const int DefaultLocalFrameCapacity = 16;
 
         private readonly JNetVirtualMachine vm;
         private readonly Thread thread;
 
-        private readonly ValueAwaiter<Action<JNetRuntime>> taskAwaiter = new();
-        private readonly ValueAwaiter<ITaskResult> resultAwaiter = new();
+        private readonly ValueAwaiter<JNetRunnable> taskAwaiter = new();
+        private readonly ValueAwaiter<Action> resultAwaiter = new();
 
         public bool CanReuse { get; private set; } = true;
 
-        public TaskExecutor(JNetVirtualMachine vm)
+        private JNetRunner(JNetVirtualMachine vm)
         {
             var thread = new Thread(Daemon);
 
@@ -37,21 +37,20 @@ namespace JNet.Runtime.Sample
             {
                 while (true)
                 {
-                    var task = taskAwaiter.Wait();
-                    taskAwaiter.Reset();
+                    var runnable = taskAwaiter.WaitAndReset();
 
                     var rc = runtime.PushLocalFrame(DefaultLocalFrameCapacity);
                     JNIResultException.Check(rc);
 
-                    ITaskResult result;
+                    Action result;
                     try
                     {
-                        task(runtime);
-                        result = SuccessTaskResult.Instance;
+                        runnable(runtime);
+                        result = SuccessResult;
                     }
                     catch (Exception e)
                     {
-                        result = new ExceptionTaskResult(e);
+                        result = ExceptionResult(e);
                     }
 
                     runtime.PopLocalFrame(default);
@@ -62,7 +61,7 @@ namespace JNet.Runtime.Sample
             catch (Exception e)
             {
                 CanReuse = false;
-                resultAwaiter.Set(new ExceptionTaskResult(e));
+                resultAwaiter.Set(ExceptionResult(e));
                 throw;
             }
             finally
@@ -71,39 +70,26 @@ namespace JNet.Runtime.Sample
             }
         }
 
-        public void Run(Action<JNetRuntime> task)
+        public void Run(JNetRunnable runnable)
         {
-            taskAwaiter.Set(task);
+            taskAwaiter.Set(runnable);
 
-            var result = resultAwaiter.Wait();
-            resultAwaiter.Reset();
+            var result = resultAwaiter.WaitAndReset();
 
-            result.Process();
+            result();
         }
 
-        private interface ITaskResult
-        {
-            public void Process() { }
-        }
+        private static void SuccessResult() { }
 
-        private class SuccessTaskResult : ITaskResult
-        {
-            public static readonly ITaskResult Instance = new SuccessTaskResult();
-        }
+        private static Action ExceptionResult(Exception ex)
+            => () => throw new AggregateException(ex);
 
-        private class ExceptionTaskResult : ITaskResult
+        public static ObjectPool<JNetRunner> CreatePool(JNetVirtualMachine vm)
         {
-            private readonly Exception exception;
-            
-            public ExceptionTaskResult(Exception exception)
-            {
-                this.exception = exception;
-            }
+            if (vm is null)
+                throw new ArgumentNullException(nameof(vm));
 
-            public void Process()
-            {
-                throw new AggregateException(exception);
-            }
+            return new ObjectPool<JNetRunner>(() => new JNetRunner(vm));
         }
     }
 }
