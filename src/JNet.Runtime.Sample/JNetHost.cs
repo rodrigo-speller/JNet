@@ -27,7 +27,8 @@ namespace JNet.Runtime.Sample
             }
             finally
             {
-                executorsPool.Return(executor);
+                if (executor.CanReuse)
+                    executorsPool.Return(executor);
             }
         }
 

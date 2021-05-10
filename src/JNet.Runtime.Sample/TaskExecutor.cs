@@ -3,18 +3,21 @@
 
 using System;
 using System.Threading;
+using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
     internal class TaskExecutor
     {
+        private const int DefaultLocalFrameCapacity = 16;
+
         private readonly JNetVirtualMachine vm;
         private readonly Thread thread;
-        private readonly ManualResetEventSlim daemonSync = new ManualResetEventSlim(false);
-        private readonly ManualResetEventSlim taskSync = new ManualResetEventSlim(false);
 
-        private Action<JNetRuntime> currentTask;
-        private Exception lastException;
+        private readonly ValueAwaiter<Action<JNetRuntime>> taskAwaiter = new();
+        private readonly ValueAwaiter<ITaskResult> resultAwaiter = new();
+
+        public bool CanReuse { get; private set; } = true;
 
         public TaskExecutor(JNetVirtualMachine vm)
         {
@@ -28,45 +31,79 @@ namespace JNet.Runtime.Sample
 
         private void Daemon()
         {
-            var rt = vm.AttachCurrentThreadAsDaemon();
+            var runtime = vm.AttachCurrentThreadAsDaemon();
 
-            while (true)
+            try
             {
-                daemonSync.Wait();
+                while (true)
+                {
+                    var task = taskAwaiter.Wait();
+                    taskAwaiter.Reset();
 
-                try
-                {
-                    currentTask(rt);
-                }
-                catch (Exception e)
-                {
-                    lastException = e;
-                }
-                finally
-                {
-                    daemonSync.Reset();
-                    taskSync.Set();
+                    var rc = runtime.PushLocalFrame(DefaultLocalFrameCapacity);
+                    JNIResultException.Check(rc);
+
+                    ITaskResult result;
+                    try
+                    {
+                        task(runtime);
+                        result = SuccessTaskResult.Instance;
+                    }
+                    catch (Exception e)
+                    {
+                        result = new ExceptionTaskResult(e);
+                    }
+
+                    runtime.PopLocalFrame(default);
+
+                    resultAwaiter.Set(result);
                 }
             }
-
-            vm.DetachCurrentThread();
+            catch (Exception e)
+            {
+                CanReuse = false;
+                resultAwaiter.Set(new ExceptionTaskResult(e));
+                throw;
+            }
+            finally
+            {
+                vm.DetachCurrentThread();
+            }
         }
 
         public void Run(Action<JNetRuntime> task)
         {
-            taskSync.Reset();
+            taskAwaiter.Set(task);
 
-            currentTask = task;
-            lastException = null;
+            var result = resultAwaiter.Wait();
+            resultAwaiter.Reset();
 
-            daemonSync.Set();
-            taskSync.Wait();
+            result.Process();
+        }
 
-            if (lastException is not null)
+        private interface ITaskResult
+        {
+            public void Process() { }
+        }
+
+        private class SuccessTaskResult : ITaskResult
+        {
+            public static readonly ITaskResult Instance = new SuccessTaskResult();
+        }
+
+        private class ExceptionTaskResult : ITaskResult
+        {
+            private readonly Exception exception;
+            
+            public ExceptionTaskResult(Exception exception)
             {
-                throw new AggregateException(lastException);
+                this.exception = exception;
             }
 
+            public void Process()
+            {
+                throw new AggregateException(exception);
+            }
         }
     }
 }
