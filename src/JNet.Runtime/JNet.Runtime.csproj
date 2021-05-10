@@ -13,6 +13,7 @@
     <Authors>Rodrigo Speller</Authors>
 
     <IncludeSource>true</IncludeSource>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 

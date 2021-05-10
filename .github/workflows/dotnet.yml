@@ -28,7 +28,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Pack
-      run: dotnet pack "src/JNet.Runtime" -c Release
+      run: dotnet pack "src/JNet.Runtime" -c Release /p:ContinuousIntegrationBuild=true
 
     - name: Upload Packages
       uses: actions/upload-artifact@v2
