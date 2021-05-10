@@ -5,4 +5,19 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <!-- Package properties -->
+  <PropertyGroup>
+    <PackageId>JNet.Runtime</PackageId>
+    <PackageVersion>0.0.0</PackageVersion>
+    <Description>A Java Runtime to .NET.</Description>
+    <Authors>Rodrigo Speller</Authors>
+
+    <IncludeSource>true</IncludeSource>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
 </Project>
