@@ -7,14 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  pack:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ ubuntu-20.04, windows-2019 ]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -30,7 +31,7 @@ jobs:
     - name: Pack
       run: dotnet pack "src/JNet.Runtime" -c Release /p:ContinuousIntegrationBuild=true
 
-    - name: Upload Packages
+    - name: Upload packages
       uses: actions/upload-artifact@v2
       with:
         name: Packages
