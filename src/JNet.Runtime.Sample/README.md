@@ -27,7 +27,7 @@ static class JNetHost
     // Runs a action.
     public static void Run(JNetRunnable runnable);
 
-    // Runs a function and returns their result.
+    // Runs a function and returns its result.
     public static T Run<T>(JNetRunnable<T> runnable);
 }
 
