@@ -11,6 +11,10 @@
     <PackageVersion>0.0.0</PackageVersion>
     <Description>A Java Runtime to .NET.</Description>
     <Authors>Rodrigo Speller</Authors>
+    <Copyright>Copyright © Rodrigo Speller 2017</Copyright>
+    
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
     <IncludeSource>true</IncludeSource>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
