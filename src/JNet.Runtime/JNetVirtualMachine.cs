@@ -26,7 +26,7 @@ namespace JNet.Runtime
             {
                 var options = configuration.BuildOptions();
 
-                JVMLib.Load(configuration);
+                var jvmlib = JVMLib.Load(configuration);
 
                 JavaVMInitArgs vm_args = new JavaVMInitArgs();
                 vm_args.SetOptions(options.ToArray());
@@ -39,7 +39,7 @@ namespace JNet.Runtime
                 JavaVM* vm;
                 JNIEnv* env;
 
-                var ret = JVMLib.JNI_CreateJavaVM(&vm, (void**)&env, (void*)p_vmArgs);
+                var ret = jvmlib.CreateJavaVM(&vm, (void**)&env, (void*)p_vmArgs);
 
                 vm_args.ReleaseOptions();
                 Marshal.FreeCoTaskMem(p_vmArgs);
