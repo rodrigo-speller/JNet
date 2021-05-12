@@ -1,0 +1,32 @@
+name: JNet pack
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pack:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Pack
+      run: dotnet pack "src/JNet" -c Release --no-build
+
+    - name: Upload packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: Packages
+        path: src/JNet/bin/Release/*.nupkg
