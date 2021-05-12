@@ -53,19 +53,20 @@ namespace JNet.Runtime
         private static JNetVirtualMachine Boot(IJNetBootstrap bootstrap, JavaVM* vm, JNIEnv* env)
         {
             var instance = new JNetVirtualMachine(vm);
-            var runtime = new JNetRuntime(env);
 
-            try
+            if (bootstrap is not null)
             {
-                bootstrap ??= DefaultBootstrap.GetBootstrap(runtime)
-                    ?? new NopBootstrap();
+                var runtime = new JNetRuntime(env);
 
-                bootstrap.Startup(runtime);
-            }
-            catch
-            {
-                instance.Destroy();
-                throw;
+                try
+                {
+                    bootstrap.Startup(runtime);
+                }
+                catch
+                {
+                    instance.Destroy();
+                    throw;
+                }
             }
 
             return instance;
