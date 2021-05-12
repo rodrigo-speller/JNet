@@ -9,6 +9,7 @@ namespace JNet.Runtime
     public struct jboolean
     {
         [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.I1)]
         public bool Value;
 
         public jboolean(bool value)
