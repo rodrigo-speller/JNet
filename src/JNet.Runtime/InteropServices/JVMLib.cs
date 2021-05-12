@@ -19,11 +19,11 @@ namespace JNet.Runtime.InteropServices
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return Linux.Load(path);
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return Windows.Load(path);
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 return OSX.Load(path);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return Windows.Load(path);
 
             throw new PlatformNotSupportedException();
         }
