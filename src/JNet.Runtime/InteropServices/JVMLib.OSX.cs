@@ -11,7 +11,7 @@ namespace JNet.Runtime.InteropServices
     {
         private unsafe class OSX : IJVMLib
         {
-            public const string JVMLibName = "libjvm.dylib";
+            public const string JVMLibName = "jvm.dylib";
 
             [DllImport(JVMLibName, CallingConvention = CallingConvention.Cdecl)]
             public static extern jint JNI_GetDefaultJavaVMInitArgs(void* vm_args);

@@ -27,11 +27,5 @@ namespace JNet.Runtime.InteropServices
 
             throw new PlatformNotSupportedException();
         }
-
-        private static bool CheckLibPath(params string[] paths)
-        {
-            var path = Path.Combine(paths);
-            return File.Exists(path);
-        }
     }
 }
