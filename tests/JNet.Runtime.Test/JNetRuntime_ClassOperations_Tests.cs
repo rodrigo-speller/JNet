@@ -1,7 +1,6 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using System.ComponentModel;
 using Xunit;
 
 namespace JNet.Runtime.Test
@@ -13,8 +12,7 @@ namespace JNet.Runtime.Test
         { }
 
         [Fact]
-        [Description("Finding the 'java.lang.System' class.")]
-        public void FindSystemClass()
+        public void Find_system_class()
         {
             var clz_System = Runtime.FindClass("java/lang/System");
 
@@ -23,8 +21,7 @@ namespace JNet.Runtime.Test
         }
 
         [Fact]
-        [Description("Finding an unknown class.")]
-        public void FindUnknownClass()
+        public void Find_unknown_class()
         {
             var clz_UnknownClass = Runtime.FindClass("invalid/package/UnknownClass");
 

@@ -1,7 +1,6 @@
 // Copyright (c) Rodrigo Speller. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Xunit;
 
@@ -10,8 +9,7 @@ namespace JNet.Runtime.Test
     public class PrimitiveTypes_jboolean_Tests
     {
         [Fact]
-        [Description("Checking the size of the unmanaged type of jboolean")]
-        public void JBooleanDataSize()
+        public void Check_jboolean_unmanaged_size()
         {
             var sz = Marshal.SizeOf<jboolean>();
 
@@ -20,8 +18,15 @@ namespace JNet.Runtime.Test
         }
 
         [Fact]
-        [Description("Casting the CLR boolean 'true' value to jboolean.")]
-        public void CastsBooleanTrueToJBoolean()
+        public void Check_jboolean_default_value()
+        {
+            jboolean jz_value = default;
+
+            Assert.False(jz_value);
+        }
+
+        [Fact]
+        public void Cast_boolean_true_to_jboolean()
         {
             jboolean jz_true = true;
 
@@ -29,8 +34,7 @@ namespace JNet.Runtime.Test
         }
 
         [Fact]
-        [Description("Casting the CLR boolean 'false' value to jboolean.")]
-        public void CastsBooleanFalseToJBoolean()
+        public void Cast_boolean_false_to_jboolean()
         {
             jboolean jz_false = false;
 
@@ -38,8 +42,7 @@ namespace JNet.Runtime.Test
         }
 
         [Fact]
-        [Description("Casting the jboolean 'true' value to CLR boolean.")]
-        public void CastsJBooleanTrueToBoolean()
+        public void Cast_jboolean_true_to_boolean()
         {
             var jz_true = jboolean.True;
 
@@ -47,8 +50,7 @@ namespace JNet.Runtime.Test
         }
 
         [Fact]
-        [Description("Casting the jboolean 'false' value to CLR boolean.")]
-        public void CastsJBooleanFalseToBoolean()
+        public void Cast_jboolean_false_to_boolean()
         {
             var jz_false = jboolean.False;
 
