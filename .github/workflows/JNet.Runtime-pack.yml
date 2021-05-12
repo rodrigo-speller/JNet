@@ -23,7 +23,7 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      run: dotnet build "src/JNet.Runtime" -c Release /p:ContinuousIntegrationBuild=true --no-restore
 
     - name: Pack
       run: dotnet pack "src/JNet.Runtime" -c Release --no-build
