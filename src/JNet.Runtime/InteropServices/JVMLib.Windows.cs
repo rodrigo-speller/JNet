@@ -24,9 +24,16 @@ namespace JNet.Runtime.InteropServices
 
             public static IJVMLib Load(string path)
             {
-                path = Path.Combine(path, "bin", "server", JVMLibName);
+                var lib = Path.Combine(path, "bin", "server", JVMLibName);
+                if (!File.Exists(lib))
+                {
+                    lib = Path.Combine(path, "jre", "bin", "server", JVMLibName);
 
-                NativeLibrary.Load(path);
+                    if (!File.Exists(lib))
+                        throw new InvalidOperationException("Java Runtime path not found.");
+                }
+
+                NativeLibrary.Load(lib);
 
                 return new Windows();
             }

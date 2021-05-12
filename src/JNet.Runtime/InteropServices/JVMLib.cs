@@ -17,7 +17,7 @@ namespace JNet.Runtime.InteropServices
                 ;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    return Windows.Load(path);
+                return Windows.Load(path);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return Linux.Load(path);
