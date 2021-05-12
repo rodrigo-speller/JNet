@@ -11,7 +11,7 @@ namespace JNet.Runtime.InteropServices
     {
         private unsafe class Linux : IJVMLib
         {
-            public const string JVMLibName = "libjvm.so";
+            public const string JVMLibName = "jvm";
 
             [DllImport(JVMLibName, CallingConvention = CallingConvention.Cdecl)]
             public static extern jint JNI_GetDefaultJavaVMInitArgs(void* vm_args);
@@ -24,7 +24,7 @@ namespace JNet.Runtime.InteropServices
 
             public static IJVMLib Load(string path)
             {
-                path = Path.Combine(path, "lib", "server", JVMLibName);
+                path = Path.Combine(path, "lib", "server", "libjvm.so");
 
                 NativeLibrary.Load(path);
 

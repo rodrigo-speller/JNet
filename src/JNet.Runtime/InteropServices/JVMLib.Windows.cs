@@ -11,7 +11,7 @@ namespace JNet.Runtime.InteropServices
     {
         private unsafe class Windows : IJVMLib
         {
-            public const string JVMLibName = "jvm.dll";
+            public const string JVMLibName = "jvm";
 
             [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
             public static extern jint JNI_GetDefaultJavaVMInitArgs(void* vm_args);
@@ -24,7 +24,7 @@ namespace JNet.Runtime.InteropServices
 
             public static IJVMLib Load(string path)
             {
-                var lib = Path.Combine(path, "bin", "server", JVMLibName);
+                var lib = Path.Combine(path, "bin", "server", "jvm.dll");
                 if (!File.Exists(lib))
                 {
                     lib = Path.Combine(path, "jre", "bin", "server", JVMLibName);
