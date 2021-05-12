@@ -16,11 +16,11 @@ namespace JNet.Runtime.InteropServices
                 ?? throw new InvalidOperationException("Java Runtime path not found.")
                 ;
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return Linux.Load(path);
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 return OSX.Load(path);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return Linux.Load(path);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return Windows.Load(path);
