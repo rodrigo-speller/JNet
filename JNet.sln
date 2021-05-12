@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		LICENSE.txt = LICENSE.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JNet", "src\JNet\JNet.csproj", "{636A94F8-678A-460B-9CC0-F6196E84EB00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,9 +55,22 @@ Global
 		{56F48701-1030-4915-A72F-129FAFD87916}.Release|x64.Build.0 = Release|Any CPU
 		{56F48701-1030-4915-A72F-129FAFD87916}.Release|x86.ActiveCfg = Release|Any CPU
 		{56F48701-1030-4915-A72F-129FAFD87916}.Release|x86.Build.0 = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|x64.Build.0 = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Debug|x86.Build.0 = Debug|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|x64.ActiveCfg = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|x64.Build.0 = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|x86.ActiveCfg = Release|Any CPU
+		{636A94F8-678A-460B-9CC0-F6196E84EB00}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C078103F-62C5-4042-A9F8-3517244CFB4F} = {E7B774AD-088F-485B-96D5-BD4B2B0D10FD}
 		{56F48701-1030-4915-A72F-129FAFD87916} = {E7B774AD-088F-485B-96D5-BD4B2B0D10FD}
+		{636A94F8-678A-460B-9CC0-F6196E84EB00} = {E7B774AD-088F-485B-96D5-BD4B2B0D10FD}
 	EndGlobalSection
 EndGlobal
