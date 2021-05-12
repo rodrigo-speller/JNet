@@ -24,7 +24,7 @@ namespace JNet.Runtime.InteropServices
 
             public static IJVMLib Load(string path)
             {
-                path = Path.Combine(path, "lib", "server", JVMLibName);
+                path = Path.Combine(path, "lib", "server", $"lib{JVMLibName}");
 
                 NativeLibrary.Load(path);
 
