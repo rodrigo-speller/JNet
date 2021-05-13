@@ -26,7 +26,11 @@ namespace JNet.Runtime.InteropServices
             {
                 path = Path.Combine(path, "lib", "server", $"libjvm.dylib");
 
-                NativeLibrary.Load(path);
+                NativeLibrary.SetDllImportResolver(typeof(JVMLib).Assembly, (libraryName, _, _) => {
+                    if (libraryName == JVMLibName)
+                        return NativeLibrary.Load(path);
+                    return IntPtr.Zero;
+                });
 
                 return new OSX();
             }
