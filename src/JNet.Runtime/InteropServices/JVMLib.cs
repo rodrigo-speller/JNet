@@ -21,7 +21,7 @@ namespace JNet.Runtime.InteropServices
                 ?? throw new InvalidOperationException("Java Runtime path not found.")
                 ;
 
-            /* Checks the OS platform an sets the native library resolver
+            /* Checks the OS platform and sets the native library resolver
              * to resolve the 'jvm' library.
              * 
              * If no supported platform is detected, it does not define any
