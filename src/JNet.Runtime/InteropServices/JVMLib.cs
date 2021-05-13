@@ -21,33 +21,35 @@ namespace JNet.Runtime.InteropServices
                 ?? throw new InvalidOperationException("Java Runtime path not found.")
                 ;
 
+            /* Checks the OS platform an sets the native library resolver
+             * to resolve the 'jvm' library.
+             * 
+             * If no supported platform is detected, it does not define any
+             * resolver and the default DllImportResolver is used.
+             */
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                NativeLibraryResolver.SetResolver(JVMLibName, () => LoadJVMLibWindows(javahome));
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                NativeLibraryResolver.SetResolver(JVMLibName, () => LoadJVMLibLinux(javahome));
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                NativeLibraryResolver.SetResolver(JVMLibName, () => LoadJVMLibOSX(javahome));
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"bin\server\jvm.dll")
+                );
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"lib/server/libjvm.so")
+                );
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"lib/server/libjvm.dylib")
+                );
+            }
         }
-
-        private static IntPtr LoadJVMLibLinux(string javahome)
-            => LoadJVMLib(
-                javahome,
-                Path.Combine(javahome, "lib", "server", "libjvm.so")
-            );
-
-        private static IntPtr LoadJVMLibOSX(string javahome)
-            => LoadJVMLib(
-                javahome,
-                Path.Combine(javahome, "lib", "server", "libjvm.dylib")
-            );
-
-        private static IntPtr LoadJVMLibWindows(string javahome)
-            => LoadJVMLib(
-                javahome,
-                Path.Combine(javahome, "bin", "server", "jvm.dll")
-            );
 
         private static IntPtr LoadJVMLib(string javahome, string relativelib)
         {
