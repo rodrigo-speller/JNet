@@ -25,6 +25,7 @@ jobs:
         -c Release
         -o .ci/artifacts
         -p:PackageVersion=${{ github.event.inputs.package_version }}
+        -p:ContinuousIntegrationBuild=true
 
     - name: Upload packages
       uses: actions/upload-artifact@v2
