@@ -25,10 +25,11 @@ jobs:
         -c Release
         -o .ci/artifacts
         -p:PackageVersion=${{ github.event.inputs.package_version }}
+        -p:SymbolPackageFormat=snupkg  --include-symbols
         -p:ContinuousIntegrationBuild=true
 
     - name: Upload packages
       uses: actions/upload-artifact@v2
       with:
-        name: Packages
+        name: JNet.Runtime-${{ github.event.inputs.package_version }}
         path: .ci/artifacts/*.nupkg
