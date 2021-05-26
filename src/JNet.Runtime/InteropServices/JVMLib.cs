@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace JNet.Runtime.InteropServices
 {
-    internal unsafe static class JVMLib
+    internal unsafe partial class JVMLib
     {
         /// <summary>
         /// Dynamic JVM native library name.
@@ -16,13 +16,53 @@ namespace JNet.Runtime.InteropServices
 
         internal static void Load(JNetConfiguration configuration)
         {
-            var path = configuration.JavaRuntimePath
+            var javahome = configuration.JavaRuntimePath
                 ?? Environment.GetEnvironmentVariable("JAVA_HOME")
+                ?? throw new InvalidOperationException("Java Runtime path not found.")
                 ;
 
-            path = Path.Combine(path, "bin", "server", "jvm.dll");
+            /* Checks the OS platform and sets the native library resolver
+             * to resolve the 'jvm' library.
+             * 
+             * If no supported platform is detected, it does not define any
+             * resolver and the default DllImportResolver is used.
+             */
 
-            NativeLibrary.Load(path);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"bin\server\jvm.dll")
+                );
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"lib/server/libjvm.so")
+                );
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                NativeLibraryResolver.SetResolver(
+                    JVMLibName,
+                    () => LoadJVMLib(javahome, @"lib/server/libjvm.dylib")
+                );
+            }
+        }
+
+        private static IntPtr LoadJVMLib(string javahome, string relativelib)
+        {
+            var lib = Path.Combine(javahome, relativelib);
+            if (!File.Exists(lib))
+            {
+                lib = Path.Combine(javahome, "jre", relativelib);
+
+                if (!File.Exists(lib))
+                    throw new InvalidOperationException("Java Runtime path not found.");
+            }
+
+            return NativeLibrary.Load(lib);
         }
 
         /// <summary>
@@ -38,7 +78,7 @@ namespace JNet.Runtime.InteropServices
         /// Returns <see cref="JNIReturnCode.OK" /> if the requested version is supported;
         /// returns a JNI error code (a negative number) if the requested version is not supported.
         /// </returns>
-        [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(JVMLibName, CallingConvention = CallingConvention.Winapi)]
         public static extern jint JNI_GetDefaultJavaVMInitArgs(void* vm_args);
 
         /// <summary>
@@ -62,7 +102,7 @@ namespace JNet.Runtime.InteropServices
         /// <returns>Returns <see cref="JNIReturnCode.OK" /> on success; returns a suitable JNI error code
         /// (a negative number) on failure.
         /// </returns>
-        [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(JVMLibName, CallingConvention = CallingConvention.Winapi)]
         public static extern jint JNI_CreateJavaVM(JavaVM** p_vm, void** p_env, void* vm_args);
 
         /// <summary>
@@ -76,7 +116,7 @@ namespace JNet.Runtime.InteropServices
         /// <param name="bufLen">The length of the buffer.</param>
         /// <param name="nVMs">A pointer to an integer. May be a <i>null</i> value.</param>
         /// <returns></returns>
-        [DllImport(JVMLibName, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(JVMLibName, CallingConvention = CallingConvention.Winapi)]
         public static extern jint JNI_GetCreatedJavaVMs(JavaVM** vmBuf, jsize bufLen, jsize* nVMs);
     }
 }

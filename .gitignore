@@ -389,3 +389,7 @@ FodyWeavers.xsd
 *.tlog
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudiocode,visualstudio
+
+### Current project ###
+
+.ci/

@@ -28,5 +28,10 @@ namespace JNet.Runtime
         {
             return value.Value;
         }
+
+        public static implicit operator char(jchar value)
+        {
+            return value.Char;
+        }
     }
 }
