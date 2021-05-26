@@ -16,8 +16,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
-    <IncludeSource>true</IncludeSource>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EmbedAllSources>true</EmbedAllSources>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
