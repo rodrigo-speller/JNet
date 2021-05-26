@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JNet.Runtime" Version="0.0.0" />
+    <PackageReference Include="JNet.Runtime" Version="0.0.1" />
   </ItemGroup>
 
 </Project>
