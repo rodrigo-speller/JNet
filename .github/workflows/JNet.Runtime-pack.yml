@@ -1,10 +1,11 @@
 name: JNet.Runtime pack
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      package_version:
+        description: 'Package version'
+        required: true
 
 jobs:
   pack:
@@ -19,17 +20,14 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build "src/JNet.Runtime" -c Release /p:ContinuousIntegrationBuild=true --no-restore
-
     - name: Pack
-      run: dotnet pack "src/JNet.Runtime" -c Release --no-build
+      run: dotnet pack "src/JNet.Runtime"
+        -c Release
+        -o .ci/artifacts
+        -p:PackageVersion=${{ github.event.inputs.package_version }}
 
     - name: Upload packages
       uses: actions/upload-artifact@v2
       with:
         name: Packages
-        path: src/JNet.Runtime/bin/Release/*.nupkg
+        path: .ci/artifacts/*.nupkg
