@@ -39,7 +39,7 @@ Pass an `JNetConfiguration` instance to *JNetVirtualMachine.Initialize* to confi
 |Property|Type|*Intialize's* method default behavior|
 |-|-|-|
 |JavaRuntimePath|string|Infer from *JAVA_HOME* environment variable.|
-|Classpath|IEnumerable<string>|No classpath.|
+|Classpath|IEnumerable&lt;string&gt;|No classpath.|
 |Bootstrap|IJNetBootstrap|No bootstrap.|
 |JNIVersion|JNIVersion|JNIVersion.Version10|
 |EnableDiagnostics|bool|false|
