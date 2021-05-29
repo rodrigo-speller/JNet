@@ -5,6 +5,6 @@ namespace JNet.Runtime
 {
     public interface IJNetBootstrap
     {
-        void Startup(JNetRuntime runtime);
+        void Startup(JNetVirtualMachine vm, JNetRuntime runtime);
     }
 }
