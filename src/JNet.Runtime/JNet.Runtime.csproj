@@ -10,6 +10,7 @@
     <PackageId>JNet.Runtime</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Description>A Java Runtime to .NET.</Description>
+    <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
     <Authors>Rodrigo Speller</Authors>
     <Copyright>Copyright © Rodrigo Speller</Copyright>
     
