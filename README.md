@@ -13,6 +13,14 @@ JNet is a Java Runtime library to .NET. With JNet you can implement .NET and Jav
 |[JNet.Runtime](src/JNet.Runtime)|The wrapper library around the JVM library. This is the base runtime to JNet.|[![JNet](https://img.shields.io/nuget/v/JNet.Runtime)](http://nuget.org/packages/JNet.Runtime)|
 |[JNet.Runtime.Sample](src/JNet.Runtime.Sample)|A sample application project using JNet.Runtime.|
 
+## Supported platforms
+
+|Platform|Tested on|
+|-|-|
+|Windows|✔ windows-2019|
+|Linux|✔ ubuntu-20.04|
+|MacOS|✔ macos-10.15|
+
 ## Read the docs
 
 JNet is a solution of libraries that runs using the JNet.Runtime. First you need to known about JNI concepts to understand how the runtime interacts with the JVM.
