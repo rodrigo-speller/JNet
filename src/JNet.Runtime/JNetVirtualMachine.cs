@@ -60,7 +60,7 @@ namespace JNet.Runtime
 
                 try
                 {
-                    bootstrap.Startup(runtime);
+                    bootstrap.Startup(instance, runtime);
                 }
                 catch
                 {
