@@ -2,12 +2,24 @@
 
 JNet is a Java Runtime library to .NET. With JNet you can implement .NET and Java integration under the hood.
 
+[![JNet](https://img.shields.io/nuget/v/JNet?label=JNet)](http://nuget.org/packages/JNet)
+[![Status](https://img.shields.io/github/workflow/status/rodrigo-speller/JNet/JNet.Runtime%20test/main?label=JNet.Runtime%20test)](https://github.com/rodrigo-speller/JNet/actions/workflows/JNet.Runtime-test.yml?query=branch%3Amain)
+
 ## The components
 
-|Component|Description|
-|-|-|
-|[JNet.Runtime](src/JNet.Runtime)|The wrapper library around the JVM library. This is the base runtime to JNet.|
+|Component|Description|Package|
+|-|-|-|
+|[JNet](src/JNet.Runtime)|The metapackage that refers to all JNet library.|[![JNet](https://img.shields.io/nuget/v/JNet)](http://nuget.org/packages/JNet)|
+|[JNet.Runtime](src/JNet.Runtime)|The wrapper library around the JVM library. This is the base runtime to JNet.|[![JNet](https://img.shields.io/nuget/v/JNet.Runtime)](http://nuget.org/packages/JNet.Runtime)|
 |[JNet.Runtime.Sample](src/JNet.Runtime.Sample)|A sample application project using JNet.Runtime.|
+
+## Supported platforms
+
+|Platform|Tested on|
+|-|-|
+|Windows|✔ windows-2019|
+|Linux|✔ ubuntu-20.04|
+|MacOS|✔ macos-10.15|
 
 ## Read the docs
 
