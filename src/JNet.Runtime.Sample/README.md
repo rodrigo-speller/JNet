@@ -71,7 +71,7 @@ static class Program
             EnableDiagnostics = debug
         });
 
-        System.Out.Println($"Hello, World!");
+        System.Out.Println("Hello, World!");
 
         JNetHost.Destroy();
     }
