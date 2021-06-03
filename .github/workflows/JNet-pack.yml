@@ -19,7 +19,7 @@ jobs:
     - name: Get Package Version
       id: get-package-version
       run: dotnet msbuild -t:CI-GetPackageVersion "src/JNet"
-        -c Release
+        -p:Configuration=Release
 
     - name: Pack
       run: dotnet pack "src/JNet"
