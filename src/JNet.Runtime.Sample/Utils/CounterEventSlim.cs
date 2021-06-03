@@ -25,14 +25,16 @@ namespace JNet.Runtime.Sample.Utils
         {
             lock (handle)
             {
-                if (--counter == 0)
+                if (--counter > 0)
+                    return;
+                
+                if (counter < 0)
                 {
-                    handle.Set();
+                    counter = 0;
                     return;
                 }
 
-                if (counter < 0)
-                    counter = 0;
+                handle.Set();
             }
         }
 
