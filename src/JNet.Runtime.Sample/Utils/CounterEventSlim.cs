@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace JNet.Runtime.Sample.Utils
 {
-    public class CounterEventSlim
+    internal class CounterEventSlim
     {
         private int counter = 0;
         private readonly EventWaitHandle handle = new(true, EventResetMode.ManualReset);

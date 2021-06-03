@@ -6,7 +6,7 @@ using JNet.Runtime.Sample.Utils;
 
 namespace JNet.Runtime.Sample
 {
-    internal static class JNetHost
+    public static class JNetHost
     {
         private static readonly object lockObj = new();
         private static readonly CounterEventSlim lockPendingRunners = new();
