@@ -2,46 +2,80 @@
 
 > We need your help! Can you help us to document this?
 
-|Component|Description|
-|-|-|
-|[JNetHost](JNetHost.cs)|A sample host implementation using JNetRuntime.|
-|[JNetRunner](JNetRunner.cs)|A sample runner that starts dedicated threads attached to JVM to run the JNetHost runnables.|
-|[java.io.PrintStream](java/io/PrintStream.cs)<br>[java.lang.System](java/lang/System.cs)|Some .NET wrappers samples to handle some Java objects.|
-
-## Contract overview
+## Sample program
 
 ```csharp
-// The contract to a runnable action using a runtime instance.
-delegate void JNetRunnable(JNetRuntime runtime);
-
-// The contract to a runnable function using a runtime instance.
-delegate TResult JNetRunnable<out TResult>(JNetRuntime runtime);
-
-
-// A sample host implementation using JNetRuntime.
-static class JNetHost
-{
-    // Initializes the host.
-    public static void Initialize(JNetConfiguration configuration = null);
-
-    // Runs a action.
-    public static void Run(JNetRunnable runnable);
-
-    // Runs a function and returns its result.
-    public static T Run<T>(JNetRunnable<T> runnable);
-}
-
+using JNet.Hosting;
 
 static class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        JNetHost.Initialize(/* you can specify some config */);
+        var debug = true;
+
+        JNetHost.Initialize(new() {
+            EnableDiagnostics = debug
+        });
 
         JNetHost.Run(runtime => {
-            // now you can use the JNetRutime here 
+
+            // The "runtime" parameter is a JNetRutime object, that exposes the JNI function for usage.
+            // See more: https://docs.oracle.com/en/java/javase/15/docs/specs/jni/functions.html
+
+            // java.lang.System class
+            var clz_System = runtime.FindClass("java/lang/System");
+            // System.out field
+            var f_out = runtime.GetStaticFieldID(clz_System, "out", "Ljava/io/PrintStream;");
+
+            // java.io.PrintStream class
+            var clz_PrintStream = runtime.FindClass("java/io/PrintStream");
+            // PrintStream.println method
+            var m_println_A = runtime.GetMethodID(clz_PrintStream, "println", "(Ljava/lang/String;)V");   
+            
+            // gets the System.out value
+            var j_out = runtime.GetStaticObjectField(clz_System, f_out);
+
+            // creates the "Hello, World!" string
+            var j_str = runtime.NewString("Hello, World!");
+
+            // call: System.out.println("Hello, World!")
+            runtime.CallVoidMethod(j_out, m_println_A, j_str);
+
         });
+
+        JNetHost.Destroy();
     }
 }
-
 ```
+
+### Sample program using wrappers
+
+The above sample can be simplified by using some .NET wrappers.
+In this sample, we created the wrapper for these classes:
+
+ * [java.io.PrintStream](java/io/PrintStream.cs)
+ * [java.lang.System](java/lang/System.cs)
+
+The same sample can be writed like:
+
+```csharp
+using JNet.Hosting;
+
+static class Program
+{
+    static void Main(string[] args)
+    {
+        var debug = true;
+
+        JNetHost.Initialize(new() {
+            EnableDiagnostics = debug
+        });
+
+        System.Out.Println($"Hello, World!");
+
+        JNetHost.Destroy();
+    }
+}
+```
+
+Clone this sample project to trying more...
