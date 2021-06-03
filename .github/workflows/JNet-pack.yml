@@ -22,7 +22,7 @@ jobs:
         -p:Configuration=Release
 
     - name: Pack
-      run: dotnet pack "src/JNet"
+      run: dotnet pack
         -c Release
         -o .ci/artifacts
         -p:SymbolPackageFormat=snupkg  --include-symbols
