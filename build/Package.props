@@ -1,0 +1,16 @@
+<Project>
+
+  <PropertyGroup>
+    <PackageVersion>0.0.3</PackageVersion>
+
+    <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
+    <Authors>Rodrigo Speller</Authors>
+    <Copyright>Copyright © Rodrigo Speller</Copyright>
+    
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+</Project>

@@ -1,24 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>JNet.Runtime</PackageId>
+    <Description>A Java Runtime to .NET.</Description>
+
     <TargetFramework>net5.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <!-- Package properties -->
-  <PropertyGroup>
-    <PackageId>JNet.Runtime</PackageId>
-    <PackageVersion>0.0.3</PackageVersion>
-    <Description>A Java Runtime to .NET.</Description>
-    <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
-    <Authors>Rodrigo Speller</Authors>
-    <Copyright>Copyright © Rodrigo Speller</Copyright>
-    
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
     <EmbedAllSources>true</EmbedAllSources>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
