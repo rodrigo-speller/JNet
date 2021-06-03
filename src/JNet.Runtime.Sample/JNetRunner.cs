@@ -12,9 +12,12 @@ namespace JNet.Runtime.Sample
         private const int DefaultLocalFrameCapacity = 16;
 
         private readonly JNetVirtualMachine vm;
-        private readonly Thread thread;
 
-        private readonly ValueAwaiter<JNetRunnable> taskAwaiter = new();
+        private readonly Thread thread;
+        private readonly EventWaitHandle threadWait = new(false, EventResetMode.ManualReset);
+        private readonly CancellationTokenSource threadCancellation = new();
+
+        private readonly ValueAwaiter<JNetCancellableRunnable> taskAwaiter = new();
         private readonly ValueAwaiter<Action> resultAwaiter = new();
 
         public bool CanReuse { get; private set; } = true;
@@ -32,12 +35,13 @@ namespace JNet.Runtime.Sample
         private void Daemon()
         {
             var runtime = vm.AttachCurrentThreadAsDaemon();
+            var cancellationToken = this.threadCancellation.Token;
 
             try
             {
                 while (true)
                 {
-                    var runnable = taskAwaiter.WaitAndReset();
+                    var runnable = taskAwaiter.WaitAndReset(cancellationToken);
 
                     var rc = runtime.PushLocalFrame(DefaultLocalFrameCapacity);
                     JNIResultException.Check(rc);
@@ -45,7 +49,7 @@ namespace JNet.Runtime.Sample
                     Action result;
                     try
                     {
-                        runnable(runtime);
+                        runnable(runtime, cancellationToken);
                         result = SuccessResult;
                     }
                     catch (Exception e)
@@ -58,6 +62,10 @@ namespace JNet.Runtime.Sample
                     resultAwaiter.Set(result);
                 }
             }
+            catch (OperationCanceledException e) when (e.CancellationToken == cancellationToken)
+            {
+                CanReuse = false;
+            }
             catch (Exception e)
             {
                 CanReuse = false;
@@ -67,10 +75,11 @@ namespace JNet.Runtime.Sample
             finally
             {
                 vm.DetachCurrentThread();
+                threadWait.Set();
             }
         }
 
-        public void Run(JNetRunnable runnable)
+        public void Run(JNetCancellableRunnable runnable)
         {
             taskAwaiter.Set(runnable);
 
@@ -84,12 +93,15 @@ namespace JNet.Runtime.Sample
         private static Action ExceptionResult(Exception ex)
             => () => throw new AggregateException(ex);
 
-        public static ObjectPool<JNetRunner> CreatePool(JNetVirtualMachine vm)
+        public static ObjectPoolSlim<JNetRunner> CreatePool()
         {
-            if (vm is null)
-                throw new ArgumentNullException(nameof(vm));
+            return new ObjectPoolSlim<JNetRunner>(() => new JNetRunner(JNetHost.VirtualMachine));
+        }
 
-            return new ObjectPool<JNetRunner>(() => new JNetRunner(vm));
+        public void Stop()
+        {
+            threadCancellation.Cancel();
+            threadWait.WaitOne();
         }
     }
 }

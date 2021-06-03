@@ -39,9 +39,22 @@ namespace JNet.Runtime.Sample.Utils
             return value;
         }
 
+        public T Wait(CancellationToken cancellationToken)
+        {
+            signal.Wait(cancellationToken);
+            return value;
+        }
+
         public T WaitAndReset()
         {
             var value = Wait();
+            Reset();
+            return value;
+        }
+
+        public T WaitAndReset(CancellationToken cancellationToken)
+        {
+            var value = Wait(cancellationToken);
             Reset();
             return value;
         }

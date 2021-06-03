@@ -14,6 +14,8 @@ namespace JNet.Runtime.Sample
             var javaVersion = System.GetProperty("java.version");
 
             System.Out.Println($"Java version: {javaVersion}");
+
+            JNetHost.Destroy();
         }
     }
 }
