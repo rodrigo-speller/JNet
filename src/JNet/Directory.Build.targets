@@ -1,0 +1,8 @@
+<Project>
+
+  <Target Name="CI-GetPackageVersion">
+    <Message Text="Package Version: $(PackageVersion)" Importance="high"/>
+    <Message Text="::set-output name=package-version::$(PackageVersion)" Importance="high"/>
+  </Target>
+
+</Project>
