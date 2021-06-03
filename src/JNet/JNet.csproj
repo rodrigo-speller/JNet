@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JNet.Runtime\JNet.Runtime.csproj" />
+    <ProjectReference Include="..\JNet.Hosting\JNet.Hosting.csproj" />
   </ItemGroup>
 
 </Project>

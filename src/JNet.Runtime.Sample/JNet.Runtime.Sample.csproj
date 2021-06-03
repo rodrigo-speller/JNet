@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JNet.Hosting\JNet.Hosting.csproj" />
+    <ProjectReference Include="..\JNet\JNet.csproj" />
   </ItemGroup>
 
 </Project>
