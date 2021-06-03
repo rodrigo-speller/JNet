@@ -11,7 +11,7 @@ namespace JNet.Runtime.Sample.Utils
     /// Thread-safe object pool.
     /// </summary>
     /// <typeparam name="T">The item type.</typeparam>
-    public class ObjectPoolSlim<T>
+    internal class ObjectPoolSlim<T>
     {
 
 #if DEBUG
