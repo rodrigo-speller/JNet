@@ -4,7 +4,7 @@
 
 JNet.Runtime is a wrapper library around the JVM (Java Native Interface - JNI) library. This is the base runtime to JNet.
 
-**You must understand the JNI approach before use this wrapper library.** Read these documentation first:
+**You must understand the JNI approach before use this wrapper library.** Read below documentation first:
 
 * [Java Development Kit Specifications - Java Native Interface Specification](https://docs.oracle.com/en/java/javase/15/docs/specs/jni/index.html)
 * [IBM SDK, Java Technology Edition 7 - The Java Native Interface (JNI)](https://www.ibm.com/docs/en/sdk-java-technology/7?topic=components-java-native-interface-jni)
@@ -18,7 +18,7 @@ To operante on virtual machine environment you needs a JNetRuntime instance. Thr
 |[JNetConfiguration](JNetConfiguration.cs)|Configures the virtual machine initialization.|
 |[JNetRuntime](JNetRuntime.cs)|Calls the JNI operations on virtual machine enviroment.|
 
-These are the steps to operate on virtual machine environment:
+There are the steps to operate on virtual machine environment:
 
 - Start the virtual machine in your process by calling `JNetVirtualMachine.Initialize` method. It must returns the `JNetVirtualMachine` instance.
 - Attach the current thread to virtual machine by calling `JNetVirtualMachine.AttachCurrentThread`. It must returns the `JNetRuntime` instance.
