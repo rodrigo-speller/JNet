@@ -3,7 +3,7 @@
 
 using System.Threading;
 
-namespace JNet.Runtime.Sample.Utils
+namespace JNet.Hosting.Utils
 {
     internal class CounterEventSlim
     {

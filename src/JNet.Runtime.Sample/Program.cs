@@ -4,6 +4,7 @@
 namespace JNet.Runtime.Sample
 {
     using java.lang;
+    using JNet.Hosting;
 
     class Program
     {

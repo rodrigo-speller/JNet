@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
-using JNet.Runtime.Sample.Utils;
+using JNet.Hosting.Utils;
+using JNet.Runtime;
 
-namespace JNet.Runtime.Sample
+namespace JNet.Hosting
 {
     internal class JNetRunner
     {

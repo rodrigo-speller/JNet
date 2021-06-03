@@ -2,8 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
 using System.Threading;
+using JNet.Runtime;
 
-namespace JNet.Runtime.Sample
+namespace JNet.Hosting
 {
     public delegate void JNetRunnable(JNetRuntime runtime);
     public delegate TResult JNetRunnable<out TResult>(JNetRuntime runtime);
