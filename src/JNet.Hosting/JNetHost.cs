@@ -2,9 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
 using System;
-using JNet.Runtime.Sample.Utils;
+using JNet.Hosting.Utils;
+using JNet.Runtime;
 
-namespace JNet.Runtime.Sample
+namespace JNet.Hosting
 {
     public static class JNetHost
     {

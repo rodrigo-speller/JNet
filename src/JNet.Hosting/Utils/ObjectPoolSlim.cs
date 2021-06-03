@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JNet.Runtime.Sample.Utils
+namespace JNet.Hosting.Utils
 {
     /// <summary>
     /// Thread-safe object pool.
