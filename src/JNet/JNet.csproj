@@ -4,7 +4,7 @@
     <PackageId>JNet</PackageId>
     <Description>A Java Runtime to .NET.</Description>
 
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <NoWarn>NU5128</NoWarn>
 
     <IncludeBuildOutput>false</IncludeBuildOutput>

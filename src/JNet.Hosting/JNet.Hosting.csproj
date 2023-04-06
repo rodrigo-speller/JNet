@@ -4,7 +4,7 @@
     <PackageId>JNet.Hosting</PackageId>
     <Description>A Java Host to .NET.</Description>
 
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <EmbedAllSources>true</EmbedAllSources>
   </PropertyGroup>
