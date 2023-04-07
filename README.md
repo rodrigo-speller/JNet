@@ -20,7 +20,7 @@ JNet is a Java Runtime library to .NET. With JNet you can implement .NET and Jav
 |-|-|
 |Windows|✔ windows-2019|
 |Linux|✔ ubuntu-20.04|
-|MacOS|✔ macos-10.15|
+|MacOS|✔ macos-11|
 
 ## "JNet" vs "JNet Runtime" vs "JNet.Runtime" vs "JNetRuntime"
 
