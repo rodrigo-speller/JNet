@@ -37,7 +37,7 @@ JNet is a solution of libraries that runs using the JNet.Runtime. First you need
 
 * [JNet.Runtime](src/JNet.Runtime/README.md)
 * [Java Development Kit Specifications - Java Native Interface Specification](https://docs.oracle.com/en/java/javase/15/docs/specs/jni/index.html)
-* [IBM SDK, Java Technology Edition 7 - The Java Native Interface (JNI)](https://www.ibm.com/docs/en/sdk-java-technology/7?topic=components-java-native-interface-jni)
+* [IBM SDK, Java Technology Edition 8 - The Java Native Interface (JNI)](https://www.ibm.com/docs/en/sdk-java-technology/8?topic=reference-java-native-interface-jni)
 
 # Bug Reports
 If you find any bugs, please report them using the GitHub issue tracker.
