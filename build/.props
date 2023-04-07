@@ -1,0 +1,9 @@
+<Project>
+
+  <PropertyGroup>
+    <JNetBuildDirectory>$(MSBuildThisFileDirectory)</JNetBuildDirectory>
+  </PropertyGroup>
+
+  <Import Project="Package.props" />
+
+</Project>

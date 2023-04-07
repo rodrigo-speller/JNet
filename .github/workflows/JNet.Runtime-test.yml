@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2019, macos-10.15 ]
+        os: [ ubuntu-20.04, windows-2019, macos-11 ]
 
     steps:
     - name: Checkout
@@ -20,8 +20,8 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
-        distribution: 'adopt'
-        java-version: '14'
+        distribution: 'microsoft'
+        java-version: '16'
 
     - name: Restore dependencies
       run: dotnet restore

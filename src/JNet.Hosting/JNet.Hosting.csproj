@@ -1,23 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
-
-  <!-- Package properties -->
-  <PropertyGroup>
     <PackageId>JNet.Hosting</PackageId>
-    <PackageVersion>0.0.3</PackageVersion>
     <Description>A Java Host to .NET.</Description>
-    <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
-    <Authors>Rodrigo Speller</Authors>
-    <Copyright>Copyright © Rodrigo Speller</Copyright>
-    
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+    <TargetFramework>net6.0</TargetFramework>
 
     <EmbedAllSources>true</EmbedAllSources>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

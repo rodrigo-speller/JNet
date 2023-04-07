@@ -49,6 +49,4 @@ Pass an `JNetConfiguration` instance to *JNetVirtualMachine.Initialize* to confi
 
 Managing the JNetRuntime instances by `AttachCurrentThread` and `DettachCurrentThread` can be complicated in your project. To simplify this, we recommend you to implement a host to handle the runtime operations.
 
-A host sample is available in: [JNetHost sample](../../src/JNet.Runtime.Sample/JNetHost.cs).
-
-> In a future version of JNet we must implement a complete host to abstract it. *You can help us opening issues by offering proposals.*
+[JNet.Hosting](http://nuget.org/packages/JNet.Hosting) is a library that implements a host to manage the JNetRuntime instances. It is a wrapper library around the JNet.Runtime library.

@@ -1,29 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <PackageId>JNet</PackageId>
+    <Description>A Java Runtime to .NET.</Description>
+
+    <TargetFramework>net6.0</TargetFramework>
+    <NoWarn>NU5128</NoWarn>
 
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <NoWarn>NU5128</NoWarn>
-  </PropertyGroup>
-
-  <!-- Package properties -->
-  <PropertyGroup>
-    <PackageId>JNet</PackageId>
-    <PackageVersion>0.0.3</PackageVersion>
-    <Description>A Java Runtime to .NET.</Description>
-    <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
-    <Authors>Rodrigo Speller</Authors>
-    <Copyright>Copyright © Rodrigo Speller</Copyright>
-    
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JNet.Runtime\JNet.Runtime.csproj" />
+    <ProjectReference Include="..\JNet.Hosting\JNet.Hosting.csproj" />
   </ItemGroup>
 
 </Project>
