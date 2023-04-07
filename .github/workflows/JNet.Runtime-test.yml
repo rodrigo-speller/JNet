@@ -20,8 +20,8 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
-        distribution: 'adopt'
-        java-version: '14'
+        distribution: 'microsoft'
+        java-version: '16'
 
     - name: Restore dependencies
       run: dotnet restore
