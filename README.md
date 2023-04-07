@@ -3,7 +3,7 @@
 JNet is a Java Runtime library to .NET. With JNet you can implement .NET and Java integration under the hood.
 
 [![JNet](https://img.shields.io/nuget/v/JNet?label=JNet)](http://nuget.org/packages/JNet)
-[![Status](https://img.shields.io/github/workflow/status/rodrigo-speller/JNet/JNet.Runtime%20test/main?label=JNet.Runtime%20test)](https://github.com/rodrigo-speller/JNet/actions/workflows/JNet.Runtime-test.yml?query=branch%3Amain)
+[![Status](https://img.shields.io/github/actions/workflow/status/rodrigo-speller/JNet/JNet.Runtime-test.yml?branch=main&label=JNet.Runtime%20test)](https://github.com/rodrigo-speller/JNet/actions/workflows/JNet.Runtime-test.yml?query=branch%3Amain)
 
 ## The components
 
