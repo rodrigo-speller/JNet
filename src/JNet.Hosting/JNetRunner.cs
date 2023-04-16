@@ -26,9 +26,6 @@ namespace JNet.Hosting
         private JNetRunner(JNetVirtualMachine vm)
         {
             var thread = new Thread(Daemon);
-
-            thread.Start();
-
             this.vm = vm;
             this.thread = thread;
         }
@@ -96,7 +93,11 @@ namespace JNet.Hosting
 
         public static ObjectPoolSlim<JNetRunner> CreatePool()
         {
-            return new ObjectPoolSlim<JNetRunner>(() => new JNetRunner(JNetHost.VirtualMachine));
+            return new ObjectPoolSlim<JNetRunner>(() => {
+                var runner = new JNetRunner(JNetHost.VirtualMachine);
+                runner.thread.Start();
+                return runner;
+            });
         }
 
         public void Stop()
