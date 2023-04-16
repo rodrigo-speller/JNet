@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <PackageVersion>0.0.3</PackageVersion>
+    <PackageVersion>0.0.4</PackageVersion>
 
     <PackageProjectUrl>https://github.com/rodrigo-speller/JNet</PackageProjectUrl>
     <Authors>Rodrigo Speller</Authors>
